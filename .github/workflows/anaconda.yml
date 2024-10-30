@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Anaconda Client
         run: |
-          conda install -y conda-smithy conda-verify anaconda-client
+          conda install -c conda-forge -y conda-smithy conda-verify anaconda-client
           
       - name: Rerender Feedstock
         run: conda smithy rerender
