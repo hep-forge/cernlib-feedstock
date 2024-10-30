@@ -16,7 +16,8 @@ requirements:
   build:
     - cmake
     - make
-    - gcc
+    - gcc_impl_linux-64
+    - gxx_impl_linux-64
   host:
     - libgcc-ng
   run:
