@@ -22,7 +22,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          conda install conda-smithy anaconda-client
+          conda install -c conda-forge conda-smithy anaconda-client conda-verify
 
       - name: Rerender Feedstock
         run: conda smithy rerender
@@ -34,4 +34,11 @@ jobs:
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
-          anaconda upload --user hep-forge /path/to/your/built/package.tar.bz2
+          # Find and upload all .tar.bz2 files in the build_output directory
+          for pkg in build_output/*.tar.bz2; do
+            if [ -f "$pkg" ]; then
+              anaconda upload --user hep-forge "$pkg"
+            else
+              echo "No packages found to upload."
+            fi
+          done
