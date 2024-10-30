@@ -1,6 +1,5 @@
 {% set name = "cernlib" %}
 {% set version = environ.get('GITHUB_REF_NAME', 'untagged')|string|replace('-', '_') %}
-{% set build_number = environ.get('GIT_DESCRIBE_NUMBER', '0') %}
 
 package:
   name: {{ name|lower }}
