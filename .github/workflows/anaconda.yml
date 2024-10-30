@@ -21,14 +21,9 @@ jobs:
         run: |
           conda install -y anaconda-client
           conda list anaconda-client  # List installed packages to verify
-
-      - name: Activate Conda Environment
-        run: |
-          source activate base  # Explicitly activate the environment
           anaconda --version  # Check if anaconda command is available
 
-      - name: Get Git Info
-        id: git_info
+      - name: Git Information
         run: |
           # Get the current tag and branch
           TAG=$(git describe --tags --abbrev=0)
@@ -39,6 +34,7 @@ jobs:
           echo "GIT_DESCRIBE_TAG=${TAG}" >> $GITHUB_ENV
           echo "GIT_BRANCH=${BRANCH}" >> $GITHUB_ENV
           echo "GIT_DESCRIBE_NUMBER=${NUMBER}" >> $GITHUB_ENV
+          cat $GITHUB_ENV
 
       - name: Rerender Feedstock
         run: conda smithy rerender
@@ -50,8 +46,7 @@ jobs:
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
-          # Find and upload all .tar.bz2 files in the build_output directory
-          echo pkgs/*/*.tar.bz2
+          anaconda upload --user hep-forge pkgs/*/*.tar.bz2
           for pkg in pkgs/*/*.tar.bz2; do
               anaconda upload --user hep-forge "$pkg"
           done
