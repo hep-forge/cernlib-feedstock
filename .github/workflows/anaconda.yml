@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: anaconda
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -29,9 +30,10 @@ jobs:
 
       - name: Upload to Anaconda
         env:
+          ANACONDA_USER: ${{ vars.ANACONDA_USER }}
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           /usr/share/miniconda/bin/anaconda upload --user hep-forge pkgs/*/*.tar.bz2
           for pkg in pkgs/*/*.tar.bz2; do
-              /usr/share/miniconda/bin/anaconda upload --user hep-forge "$pkg"
+              /usr/share/miniconda/bin/anaconda upload --user {{ ANACONDA_USER }} --token {{ ANACONDA_TOKEN }} "$pkg"
           done
