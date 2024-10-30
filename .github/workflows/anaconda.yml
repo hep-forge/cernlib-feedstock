@@ -3,7 +3,7 @@ name: Conda Build
 on:
   push:
     tags:
-      - 'v*'  # Trigger on version tags
+      - '*'  # Trigger on version tags
 
 jobs:
   build:
