@@ -23,6 +23,7 @@ jobs:
       - name: Install Dependencies
         run: |
           conda install -c conda-forge conda-smithy anaconda-client conda-verify
+          conda info --envs
 
       - name: Rerender Feedstock
         run: conda smithy rerender
@@ -35,6 +36,7 @@ jobs:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           # Find and upload all .tar.bz2 files in the build_output directory
+          echo pkg/*/*.tar.bz2
           for pkg in pkg/*/*.tar.bz2; do
               anaconda upload --user hep-forge "$pkg"
           done
