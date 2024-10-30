@@ -32,7 +32,7 @@ jobs:
           ANACONDA_USER: ${{ vars.ANACONDA_USER }}
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
-          /usr/share/miniconda/bin/anaconda upload --user {{ ANACONDA_USER }} -t {{ ANACONDA_TOKEN }} pkgs/*/*.tar.bz2
+          /usr/share/miniconda/bin/anaconda upload --user $ANACONDA_USER -t $ANACONDA_TOKEN pkgs/*/*.tar.bz2
           for pkg in pkgs/*/*.tar.bz2; do
-              /usr/share/miniconda/bin/anaconda upload --user {{ ANACONDA_USER }} -t {{ ANACONDA_TOKEN }} "$pkg"
+              /usr/share/miniconda/bin/anaconda upload --user $ANACONDA_USER -t $ANACONDA_TOKEN "$pkg"
           done
