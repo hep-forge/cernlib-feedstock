@@ -1,0 +1,61 @@
+{% set versions = {
+    "2024.09.16.0-free": "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201",
+    "2024.09.16.0": "81acd50690954c679592365dbd52f3c8fb278598a52048cc89a045dfd2b21f01",
+    "2024.06.12.0-free": "4841604233c192646868c0ffef25e25cef4364dad186a674d64a6d48342eafce", 
+    "2024.06.12.0": "c2a09876785dc010a7fdb482f48f94f76483626f2fdbeb49ecde9bd49e820f01"
+} %}
+
+{% set version = environ.get('COMMIT_VERSION', None) %}
+{% set version = version or versions.keys()|first %}
+{% set version = version|string %}
+
+package:
+  name: {{ environ.get('ANACONDA_PACKAGE', 'cernlib')|string|lower }}
+  version: {{ environ.get('ANACONDA_VERSION', version)|replace("-", ".") }}
+
+source:
+  url: "https://cernlib.web.cern.ch/download/{{ version.split('.')[0] }}_source/tar/cernlib-cernlib-{{ version }}.tar.gz"
+  {% if versions.get(version, None) %}
+  sha256: {{ versions.get(version) }}
+  {% endif %}
+  patches:
+    - patches/isystem.patch
+    - patches/make.patch
+
+requirements:
+  build:
+    - {{ compiler('gfortran') }}   # GNU Fortran compiler
+    - {{ compiler('c') }}          # GNU C compiler
+    - {{ compiler('cxx') }}        # GNU C++ compiler
+    
+    - cmake                        # Build system
+    - make                         # Make utility
+    - xorg-imake                   # X.Org imake utility
+    - libxcrypt
+
+  host:
+    - xorg-libx11
+    - xorg-libxaw
+    - freetype
+    - openmotif-dev
+    - zlib
+    - libnsl
+    - openssl
+
+  run:
+    - xorg-libx11
+    - xorg-libxaw
+    - freetype
+    - libnsl
+
+
+about:
+  home: "https://cernlib.web.cern.ch"
+  license: "GPL-3.0"
+  summary: "CERN library for high-energy physics calculations."
+  description: |
+    CERNLIB is a collection of general-purpose libraries and modules maintained and developed by CERN for physics data analysis and related purposes.
+
+extra:
+  recipe-maintainers:
+    - meiyasan

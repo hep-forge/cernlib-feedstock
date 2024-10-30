@@ -1,0 +1,5 @@
+#! /bin/bash
+
+export CERN=$CERN_OLD
+export CERN_LEVEL=$CERN_LEVEL_OLD
+export CERN_ROOT=$CERN_ROOT_OLD

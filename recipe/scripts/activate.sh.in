@@ -1,0 +1,9 @@
+#! /bin/bash
+
+export CERN_OLD=$CERN
+export CERN_LEVEL_OLD=$CERN_LEVEL
+export CERN_ROOT_OLD=$CERN_ROOT
+
+export CERN=@PKG_NAME@
+export CERN_LEVEL=$(echo "@PKG_VERSION@" | cut -d'.' -f1)
+export CERN_ROOT=@PREFIX@
