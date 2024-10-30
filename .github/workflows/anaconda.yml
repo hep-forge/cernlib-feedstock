@@ -28,7 +28,7 @@ jobs:
         run: conda smithy rerender
 
       - name: Build Package
-        run: conda build . --output pkg
+        run: conda build . --output-folder pkg
 
       - name: Upload to Anaconda
         env:
