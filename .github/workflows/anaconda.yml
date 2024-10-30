@@ -14,17 +14,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set up Miniconda
+      - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
-        with:
-          python-version: '3.8'
-          auto-update: true
 
-      - name: Install Dependencies
+      - name: Install Anaconda Client
         run: |
-          conda install -c conda-forge conda-smithy anaconda-client conda-verify -n base
-          conda info --envs
-          conda activate base
+          conda install -y anaconda-client
+          conda list anaconda-client  # List installed packages to verify
 
       - name: Get Git Info
         id: git_info
