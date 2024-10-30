@@ -21,7 +21,8 @@ jobs:
         run: |
           conda install -y anaconda-client
           conda list anaconda-client  # List installed packages to verify
-          anaconda --version  # Check if anaconda command is available
+          env
+          anaconda-client --version
 
       - name: Git Information
         run: |
