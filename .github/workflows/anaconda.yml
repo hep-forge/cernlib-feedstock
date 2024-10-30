@@ -22,7 +22,8 @@ jobs:
           conda install -y anaconda-client
           conda list anaconda-client  # List installed packages to verify
           export PATH="/usr/share/miniconda/bin:$PATH"
-          anaconda-client --version
+          find / -name anaconda 
+          /usr/share/miniconda/bin/anaconda --version
 
       - name: Git Information
         run: |
