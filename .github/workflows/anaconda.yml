@@ -22,6 +22,11 @@ jobs:
           conda install -y anaconda-client
           conda list anaconda-client  # List installed packages to verify
 
+      - name: Activate Conda Environment
+        run: |
+          source activate base  # Explicitly activate the environment
+          anaconda --version  # Check if anaconda command is available
+
       - name: Get Git Info
         id: git_info
         run: |
