@@ -28,17 +28,13 @@ jobs:
         run: conda smithy rerender
 
       - name: Build Package
-        run: conda build .
+        run: conda build . --output pkg
 
       - name: Upload to Anaconda
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           # Find and upload all .tar.bz2 files in the build_output directory
-          for pkg in build_output/*.tar.bz2; do
-            if [ -f "$pkg" ]; then
+          for pkg in pkg/*/*.tar.bz2; do
               anaconda upload --user hep-forge "$pkg"
-            else
-              echo "No packages found to upload."
-            fi
           done
