@@ -19,23 +19,8 @@ jobs:
 
       - name: Install Anaconda Client
         run: |
-          conda install -y anaconda-client
-          conda list anaconda-client  # List installed packages to verify
-
-      - name: Git Information
-        run: |
-          env
+          conda install -y conda-smithy conda-verify anaconda-client
           
-          TAG=$(git describe --tags --abbrev=0)
-          BRANCH=$(echo "${GITHUB_REF#refs/heads/}")
-          NUMBER=$(git rev-list --count HEAD)
-
-          echo "GIT_DESCRIBE_TAG=${TAG}" >> $GITHUB_ENV
-          echo "GIT_BRANCH=${BRANCH}" >> $GITHUB_ENV
-          echo "GIT_DESCRIBE_NUMBER=${NUMBER}" >> $GITHUB_ENV
-          echo "----"
-          cat $GITHUB_ENV
-
       - name: Rerender Feedstock
         run: conda smithy rerender
 
