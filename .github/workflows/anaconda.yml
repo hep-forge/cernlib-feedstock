@@ -24,15 +24,16 @@ jobs:
 
       - name: Git Information
         run: |
-          # Get the current tag and branch
+          env
+          
           TAG=$(git describe --tags --abbrev=0)
           BRANCH=$(echo "${GITHUB_REF#refs/heads/}")
           NUMBER=$(git rev-list --count HEAD)
 
-          # Set environment variables
           echo "GIT_DESCRIBE_TAG=${TAG}" >> $GITHUB_ENV
           echo "GIT_BRANCH=${BRANCH}" >> $GITHUB_ENV
           echo "GIT_DESCRIBE_NUMBER=${NUMBER}" >> $GITHUB_ENV
+          echo "----"
           cat $GITHUB_ENV
 
       - name: Rerender Feedstock
