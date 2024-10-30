@@ -10,7 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: anaconda
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
