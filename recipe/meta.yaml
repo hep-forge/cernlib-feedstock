@@ -7,19 +7,22 @@ package:
 
 source:
   url: "https://cernlib.web.cern.ch/download/2024_source/tar/cernlib-cernlib-2024.09.16.0-free.tar.gz"
-  sha256: "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201"
 
 requirements:
   build:
+    - {{ compiler('gfortran') }}
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - cmake
     - make
-    - gcc_impl_linux-64
-    - gxx_impl_linux-64
+
   host:
-    - libgcc-ng
+    - python
+    - pip
+    - setuptools
+
   run:
-    - libgcc-ng
-    - libcxx
+    - python
 
 about:
   home: "https://cernlib.web.cern.ch"
