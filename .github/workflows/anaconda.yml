@@ -22,21 +22,35 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          conda install -c conda-forge conda-smithy anaconda-client conda-verify
+          conda install -c conda-forge conda-smithy anaconda-client conda-verify -n base
           conda info --envs
+          conda activate base
+
+      - name: Get Git Info
+        id: git_info
+        run: |
+          # Get the current tag and branch
+          TAG=$(git describe --tags --abbrev=0)
+          BRANCH=$(echo "${GITHUB_REF#refs/heads/}")
+          NUMBER=$(git rev-list --count HEAD)
+
+          # Set environment variables
+          echo "GIT_DESCRIBE_TAG=${TAG}" >> $GITHUB_ENV
+          echo "GIT_BRANCH=${BRANCH}" >> $GITHUB_ENV
+          echo "GIT_DESCRIBE_NUMBER=${NUMBER}" >> $GITHUB_ENV
 
       - name: Rerender Feedstock
         run: conda smithy rerender
 
       - name: Build Package
-        run: conda build . --output-folder pkg
+        run: conda build . --output-folder pkgs
 
       - name: Upload to Anaconda
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           # Find and upload all .tar.bz2 files in the build_output directory
-          echo pkg/*/*.tar.bz2
-          for pkg in pkg/*/*.tar.bz2; do
+          echo pkgs/*/*.tar.bz2
+          for pkg in pkgs/*/*.tar.bz2; do
               anaconda upload --user hep-forge "$pkg"
           done
