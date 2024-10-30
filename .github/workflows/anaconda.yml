@@ -21,9 +21,6 @@ jobs:
         run: |
           conda install -y anaconda-client
           conda list anaconda-client  # List installed packages to verify
-          export PATH="/usr/share/miniconda/bin:$PATH"
-          find / -name anaconda 
-          /usr/share/miniconda/bin/anaconda --version
 
       - name: Git Information
         run: |
@@ -48,7 +45,7 @@ jobs:
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
-          anaconda upload --user hep-forge pkgs/*/*.tar.bz2
+          /usr/share/miniconda/bin/anaconda upload --user hep-forge pkgs/*/*.tar.bz2
           for pkg in pkgs/*/*.tar.bz2; do
-              anaconda upload --user hep-forge "$pkg"
+              /usr/share/miniconda/bin/anaconda upload --user hep-forge "$pkg"
           done
