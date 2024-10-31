@@ -17,17 +17,20 @@ jobs:
           fetch-depth: 0
           tags: true
 
+      - name: Fetch Git Repository Information
+        run: |
+          echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "COMMIT_LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+          echo "COMMIT_BRANCH=$(git branch --contains "$COMMIT_SHA" | grep -v "^HEAD" | awk '{print $2}' | sed '/^$/d')" >> $GITHUB_ENV
+
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
-
+        
       - name: Print GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-        
-      - name: Test
         run: |
-          COMMIT_SHA=$(git rev-parse HEAD)
-          COMMIT_TAG="$(git describe --tags --abbrev=0)" 
-          COMMIT_BRANCH=$(git branch --contains "$COMMIT_SHA" | awk '{print $2}' | sed '/^$/d')
-          echo "$COMMIT_SHA $COMMIT_TAG $COMMIT_BRANCH"
+          echo "$GITHUB_CONTEXT"
+          echo ">>> $COMMIT_SHA"
+          echo ">>> $COMMIT_TAG"
+          echo ">>> $COMMIT_BRANCH"
