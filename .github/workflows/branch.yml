@@ -14,8 +14,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          # fetch-depth: 0      # Fetch all history
-          tags: true          # Fetch all tags
+          fetch-depth: 0
+          tags: true
 
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
