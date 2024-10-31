@@ -54,6 +54,7 @@ jobs:
       - name: Install Tools
         run: |
           conda install -c conda-forge -y conda-smithy conda-verify anaconda-client
+          env
           
       - name: Rerender Feedstock
         run: conda smithy rerender
