@@ -28,4 +28,4 @@ jobs:
           echo "Commit SHA: $COMMIT_SHA"
           echo "Branch Name: $(git rev-parse --abbrev-ref HEAD)"
           echo "Commit Message: $(git log -1 --pretty=%B)"
-          echo "Associated Tags: $(git tag --points-at $COMMIT_SHA)"
+          echo "Associated Tags: $(git describe --tags --abbrev=0 $COMMIT_SHA)"
