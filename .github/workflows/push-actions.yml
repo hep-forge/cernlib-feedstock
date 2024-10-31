@@ -63,8 +63,9 @@ jobs:
 
       - name: Rename and Move Files
         run: |
+          find . -name "*.tar.bz2"
           find . -name "*.tar.bz2" -execdir mv '{}' "${ANACONDA_PACKAGE}-${ANACONDA_VERSION}.tar.bz2" \;
-
+          find . -name "*.tar.bz2"
       - name: Upload to Anaconda
         env:
           ANACONDA_USER: ${{ vars.ANACONDA_USER }}
