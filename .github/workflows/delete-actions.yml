@@ -1,51 +1,55 @@
-name: Conda Build
+name: Delete Files from Anaconda on Tag or Branch Deletion
 
 on:
   delete:
     branches:
-      - '**'
+      - '*'         # Runs on branch deletion
     tags:
-      - '*'
+      - '*'         # Runs on tag deletion
 
 jobs:
-  build:
+  delete-from-anaconda:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      - name: Check if Tag or Branch was Deleted
+        id: check_delete
+        run: echo "::set-output name=ref_type::${GITHUB_REF_TYPE}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          fetch-depth: 0
-          tags: true
+          python-version: '3.x'
 
-      - name: Fetch Git Repository Information
+      - name: Install Anaconda CLI
         run: |
-          COMMIT_SHA=$(git rev-parse HEAD || exit 1)
-          COMMIT_LATEST_TAG=$(git describe --tags --abbrev=0 2> /dev/null || echo "")
-          COMMIT_TAG=$(git show-ref 2> /dev/null | grep $COMMIT_SHA | grep refs/tags/ | sed "s,refs/tags/,,g" | awk '{print $2}' | head -n1 || echo "")
-          COMMIT_BRANCH=$(git show-ref 2> /dev/null | grep $COMMIT_SHA | grep refs/remotes/origin/ | sed "s,refs/remotes/origin/,,g" | awk '{print $2}' | head -n1 || echo "")
-          
-          [ ! -z "$COMMIT_SHA" ] && echo "COMMIT_SHA=$COMMIT_SHA" >> $GITHUB_ENV
-          [ ! -z "$COMMIT_TAG" ] && echo "COMMIT_TAG=$COMMIT_TAG" >> $GITHUB_ENV
-          [ ! -z "$COMMIT_LATEST_TAG" ] && echo "COMMIT_LATEST_TAG=$COMMIT_LATEST_TAG" >> $GITHUB_ENV
-          [ ! -z "$COMMIT_BRANCH" ] && echo "COMMIT_BRANCH=$COMMIT_BRANCH" >> $GITHUB_ENV
-          
-      - name: Set up Conda
-        uses: conda-incubator/setup-miniconda@v2
+          pip install anaconda-client
 
-      - name: Install Tools
-        run: |
-          conda install -c conda-forge -y conda-smithy conda-verify anaconda-client
-          
-      - name: Rerender Feedstock
-        run: conda smithy rerender
-
-      - name: Build Package
-        run: conda build . --output-folder pkgs
-
-      - name: Upload to Anaconda
+      - name: Authenticate with Anaconda
         env:
-          ANACONDA_USER: ${{ vars.ANACONDA_USER }}
-          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
-          env
+          # Check if authentication works
+          anaconda whoami
+
+      - name: Delete files in Anaconda based on Deleted Tag or Branch
+        if: steps.check_delete.outputs.ref_type == 'tag' || steps.check_delete.outputs.ref_type == 'branch'
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+        run: |
+          # Define package name and organization
+          ORG_NAME="your_org_name"
+          PACKAGE_NAME="your_package_name"
+
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            TAG_NAME="${GITHUB_REF#refs/tags/}"
+            # Perform deletion for a tag
+            echo "Deleting files in Anaconda associated with tag: $TAG_NAME"
+            anaconda remove "$ORG_NAME/$PACKAGE_NAME/$TAG_NAME" --force
+
+          elif [ "${GITHUB_REF_TYPE}" = "branch" ]; then
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+            # Perform deletion for a branch
+            echo "Deleting files in Anaconda associated with branch: $BRANCH_NAME"
+            anaconda remove "$ORG_NAME/$PACKAGE_NAME/$BRANCH_NAME" --force
+          fi
