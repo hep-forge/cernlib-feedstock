@@ -28,10 +28,4 @@ jobs:
           echo "Branch name is: $BRANCH_NAME"
           echo "Headref name is: ${{ github.head_ref }}"
           echo "refname is: ${{ github.ref_name }}"
-          git branch
-          # Get the commit SHA of the tag
-          commit_sha=$(git rev-list -n 1 $BRANCH_NAME)
-          git branch --contains $commit_sha
-          echo ":::: $(git rev-parse --abbrev-ref HEAD)"
-          echo ":::: $(git branch)"
 
