@@ -21,10 +21,12 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
           echo "Branch name is: $BRANCH_NAME"
-          echo "Branch name is: ${{ github.head_ref }}"
-          echo "Branch name is: ${{ github.ref_name }}"
+          echo "Headref name is: ${{ github.head_ref }}"
+          echo "refname is: ${{ github.ref_name }}"
           git branch
-          env
+          # Get the commit SHA of the tag
+          commit_sha=$(git rev-list -n 1 $BRANCH_NAME)
+          git branch --contains $commit_sha
           echo ":::: $(git rev-parse --abbrev-ref HEAD)"
           echo ":::: $(git branch)"
 
