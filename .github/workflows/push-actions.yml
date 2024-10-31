@@ -28,6 +28,35 @@ jobs:
           [ ! -z "$COMMIT_TAG" ] && echo "COMMIT_TAG=$COMMIT_TAG" >> $GITHUB_ENV
           [ ! -z "$COMMIT_LATEST_TAG" ] && echo "COMMIT_LATEST_TAG=$COMMIT_LATEST_TAG" >> $GITHUB_ENV
           [ ! -z "$COMMIT_BRANCH" ] && echo "COMMIT_BRANCH=$COMMIT_BRANCH" >> $GITHUB_ENV
+      
+      - name: Set Version
+        id: set_version
+        run: |
+          VERSION="${COMMIT_TAG:-${COMMIT_LATEST_TAG:-0.0.0-dev}}"
+          VERSION=${VERSION//-/.}
+          echo "VERSION=$VERSION"
+          echo "ANACONDA_VERSION=$VERSION" >> $GITHUB_ENV
+          env
+          
+      - name: Set OS and Architecture
+        id: set_os_arch
+        run: |
+          OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+          ARCH=$(uname -m)
+          echo "os_arch=${OS}-${ARCH}" >> $GITHUB_ENV
+
+      - name: Rename and Move Files
+        run: |
+          mkdir -p "pkgs/${os_arch}"
+
+          for file in pkgs/*/*.tar.bz2; do
+            # Create the new filename
+            new_file="${os_arch}/cernlib-${version}.tar.bz2"
+
+            # Move and rename the file
+            mv "$file" "$new_file"
+            echo "Moved $file to $new_file"
+          done
           
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
