@@ -1,0 +1,29 @@
+name: Conda Build
+
+on:
+  push:
+    branches:
+      - '**
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Conda
+        uses: conda-incubator/setup-miniconda@v2
+
+      - name: Test
+        run: |
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          echo "Branch name is: $BRANCH_NAME"
+          echo "Branch name is: ${{ github.head_ref }}"
+          echo "Branch name is: ${{ github.ref_name }}"
+          git branch
+          env
+          echo ":::: $(git rev-parse --abbrev-ref HEAD)"
+

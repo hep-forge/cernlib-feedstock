@@ -3,9 +3,9 @@ name: Conda Build
 on:
   push:
     branches:
-      - main
+      - '**
     tags:
-      - '*'  # Trigger on version tags
+      - '*'
 
 jobs:
   build:
@@ -32,4 +32,4 @@ jobs:
           ANACONDA_USER: ${{ vars.ANACONDA_USER }}
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
-          /usr/share/miniconda/bin/anaconda -t $ANACONDA_TOKEN upload --force --user $ANACONDA_USER pkgs/*/*.tar.bz2
+          /usr/share/miniconda/bin/anaconda -t $ANACONDA_TOKEN upload --force --user $ANACONDA_USER pkgs/*/*.tar.bz2 --label ${{ github.ref_name }}
