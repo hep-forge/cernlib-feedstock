@@ -6,7 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  url: "https://cernlib.web.cern.ch/download/2024_source/tar/cernlib-cernlib-2024.09.16.0.tar.gz"
+  url: "https://cernlib.web.cern.ch/download/2024_source/tar/cernlib-cernlib-2024.09.16.0-free.tar.gz"
+  # url: "https://cernlib.web.cern.ch/download/2024_source/tar/cernlib-cernlib-2024.09.16.0.tar.gz"
 
 requirements:
   build:
