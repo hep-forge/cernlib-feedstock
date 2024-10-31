@@ -11,17 +11,19 @@ source:
 
 requirements:
   build:
-    - {{ compiler('gfortran') }}
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-
-    - cmake
-    - make
-    - xorg-imake
-    - xorg-libx11
-    - xorg-libxaw
-    - freetype
-    - openmotif-dev
+    - {{ compiler('gfortran') }}   # GNU Fortran compiler
+    - {{ compiler('c') }}          # GNU C compiler
+    - {{ compiler('cxx') }}        # GNU C++ compiler
+    - cmake                        # Build system
+    - make                         # Make utility
+    - xorg-imake                   # X.Org imake utility
+    - xorg-libx11                  # X11 client-side library
+    - xorg-libxaw                  # Xaw widget set for X11
+    - freetype                     # FreeType library for font rendering
+    - openmotif-dev                # Open Motif development libraries
+    - libgcc-ng                    # GNU C Compiler support library
+    - libstdcxx-ng                 # GNU Standard C++ Library
+    - zlib                         # Compression library (if needed)
 
   host:
     - python
