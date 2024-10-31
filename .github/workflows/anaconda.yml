@@ -72,7 +72,8 @@ jobs:
 
       - name: Build Package
         run: |
-          conda build . --croot /tmp/conda-bld --prefix-length 80 --output-folder pkgs
+          env
+          conda build . --prefix-length 80 --output-folder pkgs
 
       - name: Upload to Anaconda
         env:
