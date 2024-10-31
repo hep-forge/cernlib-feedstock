@@ -26,8 +26,8 @@ jobs:
         run: |
           COMMIT_SHA=$(git rev-parse HEAD)
           echo "Commit SHA: $COMMIT_SHA"
+          echo "$(git show-ref --tags -d)"
           echo "$(git show-ref --tags -d | grep ^HEAD)"
           echo "$(git show-ref --tags -d | grep ^${COMMIT_SHA})"
           echo "Branch Name: $(git branch --contains $TAG_COMMIT_SHA | grep -v 'HEAD')"
-          echo "Commit Message: $(git log -1 --pretty=%B)"
-          echo "Associated Tags: $(git describe --tags $COMMIT_SHA)"
+          echo "Associated Tags: $(git describe --tags)"
