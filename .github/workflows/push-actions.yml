@@ -40,9 +40,13 @@ jobs:
           echo "ANACONDA_PACKAGE=$PACKAGE"
           echo "ANACONDA_PACKAGE=$PACKAGE" >> $GITHUB_ENV
           
-          ANACONDA_OSARCH="$(uname -s | tr '[:upper:]' '[:lower:]')/$(uname -m)"
-          echo "ANACONDA_OSARCH=$ANACONDA_OSARCH"
-          echo "ANACONDA_OSARCH=$ANACONDA_OSARCH" >> $GITHUB_ENV
+          ANACONDA_OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+          echo "ANACONDA_OS=$ANACONDA_OS"
+          echo "ANACONDA_OS=$ANACONDA_OS" >> $GITHUB_ENV
+          
+          ANACONDA_ARCH="$(uname -m)"
+          echo "ANACONDA_ARCH=$ANACONDA_ARCH"
+          echo "ANACONDA_ARCH=$ANACONDA_ARCH" >> $GITHUB_ENV
 
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
@@ -59,13 +63,7 @@ jobs:
 
       - name: Rename and Move Files
         run: |
-
-          mkdir -p "pkgs/${ANACONDA_OSARCH}"
-          find -name *.tar.bz2
-
-          for file in $(find -name *.tar.bz2); do
-            mv "$file" "${ANACONDA_OSARCH}/ANACONDA_PACKAGE-${ANACONDA_VERSION}.tar.bz2"
-          done
+          find . -name "*.tar.bz2" -execdir mv '{}' "${ANACONDA_PACKAGE}-${ANACONDA_VERSION}.tar.bz2" \;
 
       - name: Upload to Anaconda
         env:
