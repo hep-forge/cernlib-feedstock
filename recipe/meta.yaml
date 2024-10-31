@@ -17,6 +17,7 @@ requirements:
     - cmake
     - make
     - xorg-imake
+    - xorg-libx11
 
   host:
     - python
