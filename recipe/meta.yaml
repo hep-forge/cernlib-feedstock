@@ -33,6 +33,9 @@ about:
     CERNLIB is a collection of general-purpose libraries and modules maintained and developed by CERN for physics data analysis and related purposes.
 
 extra:
+  channels:
+    - conda-forge
+    - defaults
   recipe-maintainers:
     - meiyasan
 
