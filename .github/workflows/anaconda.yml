@@ -24,10 +24,10 @@ jobs:
           COMMIT_TAG=$(git show-ref 2> /dev/null | grep $COMMIT_SHA | grep refs/tags/ | sed "s,refs/tags/,,g" | awk '{print $2}' | head -n1 || echo "")
           COMMIT_BRANCH=$(git show-ref 2> /dev/null | grep $COMMIT_SHA | grep refs/remotes/origin/ | sed "s,refs/remotes/origin/,,g" | awk '{print $2}' | head -n1 || echo "")
           
-          echo "COMMIT_SHA=\"$COMMIT_SHA\"" >> $GITHUB_ENV
-          echo "COMMIT_TAG=\"$COMMIT_TAG\"" >> $GITHUB_ENV
-          echo "COMMIT_LATEST_TAG=\"$COMMIT_LATEST_TAG\"" >> $GITHUB_ENV
-          echo "COMMIT_BRANCH=\"$COMMIT_BRANCH\"" >> $GITHUB_ENV
+          [ ! -z "$COMMIT_SHA" ] && echo "COMMIT_SHA=\"$COMMIT_SHA\"" >> $GITHUB_ENV
+          [ ! -z "$COMMIT_TAG" ] && echo "COMMIT_TAG=\"$COMMIT_TAG\"" >> $GITHUB_ENV
+          [ ! -z "$COMMIT_LATEST_TAG" ] && echo "COMMIT_LATEST_TAG=\"$COMMIT_LATEST_TAG\"" >> $GITHUB_ENV
+          [ ! -z "$COMMIT_BRANCH" ] && echo "COMMIT_BRANCH=\"$COMMIT_BRANCH\"" >> $GITHUB_ENV
           
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
@@ -48,5 +48,5 @@ jobs:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
 
         run: |
-          ANACONDA_LABEL=$COMMIT_BRANCH
+          [ ! -z "$ANACONDA_LABEL" ] && ANACONDA_LABEL=$COMMIT_BRANCH || ANACONDA_LABEL="main"
           /usr/share/miniconda/bin/anaconda -t $ANACONDA_TOKEN upload --force --user $ANACONDA_USER pkgs/*/*.tar.bz2 --label $ANACONDA_LABEL
