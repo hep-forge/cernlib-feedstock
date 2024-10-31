@@ -15,6 +15,7 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - make
+    - xorg-imake
 
   host:
     - python
