@@ -26,4 +26,5 @@ jobs:
           git branch
           env
           echo ":::: $(git rev-parse --abbrev-ref HEAD)"
+          echo ":::: $(git branch)"
 
