@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0      # Fetch all history
+          # fetch-depth: 0      # Fetch all history
           tags: true          # Fetch all tags
 
       - name: Set up Conda
@@ -29,9 +29,6 @@ jobs:
         run: |
           COMMIT_SHA=$(git rev-parse HEAD)
           echo "Commit SHA: $COMMIT_SHA"
-          echo "$(git describe --exact-match --tags)"
+          echo "$(git branch --contains "$COMMIT_SHA" | grep -v 'HEAD' | awk 'NR==1')"
           echo "$(git show-ref --tags -d)"
-          echo "$(git show-ref --tags -d | grep ^HEAD)"
-          echo "$(git show-ref --tags -d | grep ^${COMMIT_SHA})"
-          echo "Branch Name: $(git branch --contains $TAG_COMMIT_SHA | grep -v 'HEAD')"
           echo "Associated Tags: $(git describe --tags --abbrev=0)"
