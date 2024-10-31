@@ -40,7 +40,7 @@ jobs:
           echo "ANACONDA_PACKAGE=$PACKAGE"
           echo "ANACONDA_PACKAGE=$PACKAGE" >> $GITHUB_ENV
           
-          ANACONDA_OSARCH="$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)"
+          ANACONDA_OSARCH="$(uname -s | tr '[:upper:]' '[:lower:]')/$(uname -m)"
           echo "ANACONDA_OSARCH=$ANACONDA_OSARCH"
           echo "ANACONDA_OSARCH=$ANACONDA_OSARCH" >> $GITHUB_ENV
 
@@ -48,7 +48,9 @@ jobs:
         run: |
 
           mkdir -p "pkgs/${ANACONDA_OSARCH}"
-          for file in pkgs/*/*.tar.bz2; do
+          find -name *.tar.bz2
+
+          for file in $(find -name *.tar.bz2); do
             mv "$file" "${ANACONDA_OSARCH}/ANACONDA_PACKAGE-${ANACONDA_VERSION}.tar.bz2"
           done
           
