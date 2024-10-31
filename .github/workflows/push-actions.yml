@@ -32,11 +32,11 @@ jobs:
       - name: Set Version
         id: set_version
         run: |
-          VERSION="${COMMIT_TAG:-${COMMIT_LATEST_TAG:-0.0.0-dev}}"
+          VERSION="${COMMIT_TAG:-${COMMIT_LATEST_TAG:-0.0.0}-dev}"
           VERSION=${VERSION//-/.}
-          echo "VERSION=$VERSION"
+          echo "ANACONDA_VERSION=$VERSION"
           echo "ANACONDA_VERSION=$VERSION" >> $GITHUB_ENV
-          env
+          echo "$(basename `git rev-parse --show-toplevel`)"
           
       - name: Set OS and Architecture
         id: set_os_arch
