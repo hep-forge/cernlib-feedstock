@@ -20,9 +20,9 @@ jobs:
       - name: Fetch Git Repository Information
         run: |
           COMMIT_SHA=$(git rev-parse HEAD || exit 1)
-          COMMIT_TAG=$(git describe --exact-match --tags --abbrev=0 2> /dev/null || echo "")
           COMMIT_LATEST_TAG=$(git describe --tags --abbrev=0 2> /dev/null || echo "")
-          COMMIT_BRANCH=$(git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads/ 2> /dev/null | head -n 1 || echo "")
+          COMMIT_TAG=$(git describe --exact-match --tags --abbrev=0 2> /dev/null || echo "")
+          COMMIT_BRANCH=$(echo "{{ github.event.base_ref }}" | sed "s,refs/heads/,,g" || echo "")
           env
 
           
