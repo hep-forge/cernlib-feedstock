@@ -41,8 +41,8 @@ jobs:
           echo "ANACONDA_PACKAGE=$PACKAGE" >> $GITHUB_ENV
           
           ANACONDA_OSARCH="$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)"
-          echo "ANACONDA_OSARCH=$OSARCH"
-          echo "ANACONDA_OSARCH=$OSARCH" >> $GITHUB_ENV
+          echo "ANACONDA_OSARCH=$ANACONDA_OSARCH"
+          echo "ANACONDA_OSARCH=$ANACONDA_OSARCH" >> $GITHUB_ENV
 
       - name: Rename and Move Files
         run: |
