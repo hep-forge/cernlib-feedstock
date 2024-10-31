@@ -2,6 +2,9 @@
 
 # Specify the custom channels to use
 channels:
-  - hep-forge  # Your custom channel
-  - conda-forge        # Additional channel (optional)
-  - defaults           # Default channel (optional)
+  - hep-forge
+  - conda-forge
+  
+channel_sources:
+  - hep-forge
+  - conda-forge
