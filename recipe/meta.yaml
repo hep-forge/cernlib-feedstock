@@ -18,6 +18,7 @@ requirements:
     - make
     - xorg-imake
     - xorg-libx11
+    - xorg-libxaw
     - freetype
     - openmotif-dev
 
