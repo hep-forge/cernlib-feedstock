@@ -65,7 +65,7 @@ jobs:
         run: conda smithy rerender
 
       - name: Build Package
-        run: conda build . --croot --output-folder pkgs -c hep-forge -c conda-forge
+        run: conda build . --croot /tmp/conda-build --output-folder pkgs -c hep-forge -c conda-forge
 
       - name: Upload to Anaconda
         env:
