@@ -19,7 +19,7 @@ requirements:
     - xorg-imake
     - xorg-libx11
     - freetype
-    - openmotif
+    - openmotif-dev
 
   host:
     - python
