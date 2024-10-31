@@ -54,6 +54,7 @@ jobs:
       - name: Install Forge
         run: |
           conda install -c conda-forge -y conda-smithy conda-verify anaconda-client
+          conda update conda-smithy conda-verify anaconda-client
           conda smithy rerender
 
       - name: Build Package
