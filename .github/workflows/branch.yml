@@ -22,9 +22,7 @@ jobs:
           COMMIT_SHA=$(git rev-parse HEAD || exit 1)
           COMMIT_LATEST_TAG=$(git describe --tags --abbrev=0 2> /dev/null || echo "")
           COMMIT_TAG=$(git describe --exact-match --tags --abbrev=0 2> /dev/null || echo "")
-          COMMIT_BRANCH=$(echo "{{ github.event.base_ref }}" | sed "s,refs/heads/,,g" || echo "")
-          env
-
+          COMMIT_BRANCH=$(echo "${{ github.event.base_ref }}" | sed "s,refs/heads/,,g" || echo "")
           
           echo "COMMIT_SHA=$COMMIT_SHA" >> $GITHUB_ENV
           echo "COMMIT_TAG=$COMMIT_TAG" >> $GITHUB_ENV
