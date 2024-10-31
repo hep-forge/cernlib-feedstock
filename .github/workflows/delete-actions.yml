@@ -38,8 +38,8 @@ jobs:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           # Define package name and organization
-          ORG_NAME="your_org_name"
-          PACKAGE_NAME="your_package_name"
+          ORG_NAME="hep-forge"
+          PACKAGE_NAME="cernlib"
 
           if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
             TAG_NAME="${GITHUB_REF#refs/tags/}"
