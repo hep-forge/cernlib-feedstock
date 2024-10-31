@@ -17,6 +17,11 @@ jobs:
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
 
+      - name: Print GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        
       - name: Test
         run: |
           BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
