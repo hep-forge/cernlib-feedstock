@@ -37,6 +37,7 @@ about:
 
 extra:
   channels:
+    - hep-forge
     - conda-forge
     - defaults
   recipe-maintainers:
