@@ -28,7 +28,26 @@ jobs:
           [ ! -z "$COMMIT_TAG" ] && echo "COMMIT_TAG=$COMMIT_TAG" >> $GITHUB_ENV
           [ ! -z "$COMMIT_LATEST_TAG" ] && echo "COMMIT_LATEST_TAG=$COMMIT_LATEST_TAG" >> $GITHUB_ENV
           [ ! -z "$COMMIT_BRANCH" ] && echo "COMMIT_BRANCH=$COMMIT_BRANCH" >> $GITHUB_ENV
+      
+      - name: Set Package Name, Version and Architecture
+        run: |
+          VERSION="${COMMIT_TAG:-${COMMIT_LATEST_TAG:-0.0.0}-dev}"
+          VERSION=${VERSION//-/.}
+          echo "ANACONDA_VERSION=$VERSION"
+          echo "ANACONDA_VERSION=$VERSION" >> $GITHUB_ENV
+
+          PACKAGE="$(basename `git rev-parse --show-toplevel` | sed 's,-feedstock,,g')"
+          echo "ANACONDA_PACKAGE=$PACKAGE"
+          echo "ANACONDA_PACKAGE=$PACKAGE" >> $GITHUB_ENV
           
+          ANACONDA_OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+          echo "ANACONDA_OS=$ANACONDA_OS"
+          echo "ANACONDA_OS=$ANACONDA_OS" >> $GITHUB_ENV
+          
+          ANACONDA_ARCH="$(uname -m)"
+          echo "ANACONDA_ARCH=$ANACONDA_ARCH"
+          echo "ANACONDA_ARCH=$ANACONDA_ARCH" >> $GITHUB_ENV
+
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
 
@@ -44,7 +63,6 @@ jobs:
 
       - name: Upload to Anaconda
         env:
-          ANACONDA_USER: ${{ vars.ANACONDA_USER }}
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
 
         run: |
