@@ -3,7 +3,7 @@
 mkdir build
 cd build
 
-cmake .. -DCMAKE_INSTALL_PREFIX=${PWD}/../cern/new
+cmake --trace-expand .. -DCMAKE_INSTALL_PREFIX=${PWD}/../cern/new
 
 make
 make install
