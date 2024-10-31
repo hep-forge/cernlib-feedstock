@@ -28,6 +28,6 @@ jobs:
       - name: Test
         run: |
           COMMIT_SHA=$(git rev-parse HEAD)
-          COMMIT_TAG="$(git describe --tags --abbrev=0)" 
+          COMMIT_TAG="$(git describe --tags --abbrev=0 | awk '{print $2}')" 
           COMMIT_BRANCH=$(git branch --contains "$COMMIT_SHA")
           echo "$COMMIT_SHA $COMMIT_TAG $COMMIT_BRANCH"
