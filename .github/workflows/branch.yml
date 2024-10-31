@@ -24,8 +24,8 @@ jobs:
         
       - name: Test
         run: |
-          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
-          echo "Branch name is: $BRANCH_NAME"
-          echo "Headref name is: ${{ github.head_ref }}"
-          echo "refname is: ${{ github.ref_name }}"
-
+          COMMIT_SHA=$(git rev-parse HEAD)
+          echo "Commit SHA: $COMMIT_SHA"
+          echo "Branch Name: $(git rev-parse --abbrev-ref HEAD)"
+          echo "Commit Message: $(git log -1 --pretty=%B)"
+          echo "Associated Tags: $(git tag --points-at $COMMIT_SHA)"
