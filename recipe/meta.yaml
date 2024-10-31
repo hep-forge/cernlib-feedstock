@@ -1,5 +1,5 @@
-{% set name = "cernlib" %}
-{% set version = environ.get('COMMIT_TAG', environ.get('COMMIT_LATEST_TAG', "0.0.0")+"-dev")|string|replace('-', '.')  %}
+{% set name = environ.get('ANACONDA_PACKAGE')|string %}
+{% set version = environ.get('ANACONDA_VERSION')|string|replace('-', '.')  %}
 
 package:
   name: {{ name|lower }}
