@@ -12,7 +12,10 @@ requirements:
   build:
     - {{ compiler('gfortran') }}
     - {{ compiler('c') }}
+    - {{ stdlib('c') }} 
     - {{ compiler('cxx') }}
+    - {{ stdlib('cxx') }} 
+
     - cmake
     - make
     - xorg-imake
