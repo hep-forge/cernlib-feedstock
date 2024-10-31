@@ -69,7 +69,9 @@ jobs:
         run: conda smithy rerender
 
       - name: Build Package
-        run: conda build . --croot /tmp/conda-build --output-folder pkgs
+        run: |
+          export CONDA_BLD_PATH=/tmp/conda-bld
+          conda build . --croot /tmp/conda-bld --prefix-length 80 --output-folder pkgs
 
       - name: Upload to Anaconda
         env:
