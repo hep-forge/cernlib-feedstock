@@ -31,6 +31,8 @@ jobs:
           
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
+
+      - name: Install Tools
         run: |
           conda install -c conda-forge -y conda-smithy conda-verify anaconda-client
           
