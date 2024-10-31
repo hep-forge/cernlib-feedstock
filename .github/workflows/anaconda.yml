@@ -46,9 +46,8 @@ jobs:
         env:
           ANACONDA_USER: ${{ vars.ANACONDA_USER }}
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-          ANACONDA_LABEL: ${{ github.COMMIT_BRANCH }}
+          ANACONDA_LABEL: ${{ COMMIT_BRANCH }}
 
         run: |
           echo $ANACONDA_LABEL
-          env
-          /usr/share/miniconda/bin/anaconda -t $ANACONDA_TOKEN upload --force --user $ANACONDA_USER pkgs/*/*.tar.bz2 --label ${{ github.ref_name }}
+          # /usr/share/miniconda/bin/anaconda -t $ANACONDA_TOKEN upload --force --user $ANACONDA_USER pkgs/*/*.tar.bz2 --label $ANACONDA_USER
