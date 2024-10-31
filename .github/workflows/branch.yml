@@ -28,7 +28,12 @@ jobs:
       - name: Test
         run: |
           COMMIT_SHA=$(git rev-parse HEAD)
-          echo "Commit SHA: $COMMIT_SHA"
-          echo "$(git branch --contains "$COMMIT_SHA" | grep -v 'HEAD' | awk 'NR==1')"
-          echo "$(git show-ref --tags -d)"
-          echo "Associated Tags: $(git describe --tags --abbrev=0)"
+          COMMIT_TAG="$(git describe --tags --abbrev=0) $(git show-ref --tags -d)" 
+          COMMIT_BRANCH=$(git branch --contains "$COMMIT_SHA" | grep -v 'HEAD' | awk 'NR==1')
+
+        # run: |
+        #   COMMIT_SHA=$(git rev-parse HEAD)
+        #   echo "Commit SHA: $COMMIT_SHA"
+        #   echo "$(git branch --contains "$COMMIT_SHA" | grep -v 'HEAD' | awk 'NR==1')"
+        #   echo "$(git show-ref --tags -d)"
+        #   echo "Associated Tags: $(git describe --tags --abbrev=0)"
