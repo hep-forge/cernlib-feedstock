@@ -48,6 +48,8 @@ jobs:
           echo "ANACONDA_ARCH=$ANACONDA_ARCH"
           echo "ANACONDA_ARCH=$ANACONDA_ARCH" >> $GITHUB_ENV
 
+          echo "CONDA_BLD_PATH=/tmp/conda-bld" >> $GITHUB_ENV
+          
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
 
@@ -70,7 +72,6 @@ jobs:
 
       - name: Build Package
         run: |
-          export CONDA_BLD_PATH=/tmp/conda-bld
           conda build . --croot /tmp/conda-bld --prefix-length 80 --output-folder pkgs
 
       - name: Upload to Anaconda
