@@ -4,5 +4,5 @@ mkdir build
 cd build
 
 cmake .. -DCMAKE_INSTALL_PREFIX=${PWD}/../cern/new
-make -j
+make -j$((nproc))
 make install
