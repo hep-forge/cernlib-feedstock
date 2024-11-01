@@ -31,6 +31,7 @@ requirements:
     - xorg-imake                   # X.Org imake utility
 
   host:
+    - python
     - xorg-libx11                  # X11 client-side library
     - xorg-libxaw                  # Xaw widget set for X11
     - freetype                     # FreeType library for font rendering
