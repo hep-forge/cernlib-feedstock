@@ -1,6 +1,0 @@
-channel_sources:
-- conda-forge
-channel_targets:
-- hep-forge main
-target_platform:
-- win-64

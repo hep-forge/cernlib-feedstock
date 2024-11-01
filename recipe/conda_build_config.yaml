@@ -1,0 +1,6 @@
+channel_sources:
+  - hep-forge,conda-forge,defaults
+
+conda_forge_output_validation: true
+conda_build:
+  pkg_format: '2'

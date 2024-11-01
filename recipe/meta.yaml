@@ -4,13 +4,18 @@ package:
 
 {% set version = environ.get('COMMIT_TAG', None) or environ.get('COMMIT_LATEST_TAG', None) or None %}
 {% set sha256 = {
-    "2024.06.12.0-free": "4841604233c192646868c0ffef25e25cef4364dad186a674d64a6d48342eafce", 
+    "2024.09.16.0-free": "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201",
     "2024.09.16": "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201"
+    "2024.06.12.0-free": "4841604233c192646868c0ffef25e25cef4364dad186a674d64a6d48342eafce", 
+    "2024.06.12": "c2a09876785dc010a7fdb482f48f94f76483626f2fdbeb49ecde9bd49e820f01"
 } %}
 
 {% set version = version or sha256.keys()|first %}
 source:
   url: "https://cernlib.web.cern.ch/download/{{ version.split('.')[0] }}_source/tar/cernlib-cernlib-{{ version }}.tar.gz"
+#  patches:
+#    - isystem_patch.diff
+
   {% if sha256.get(version, None) %}
   sha256: {{ sha256.get(version) }}
   {% endif %}
@@ -24,18 +29,13 @@ requirements:
     - cmake                        # Build system
     - make                         # Make utility
     - xorg-imake                   # X.Org imake utility
+
+  host:
     - xorg-libx11                  # X11 client-side library
     - xorg-libxaw                  # Xaw widget set for X11
     - freetype                     # FreeType library for font rendering
     - openmotif-dev                # Open Motif development libraries
-    - libgcc-ng                    # GNU C Compiler support library
-    - libstdcxx-ng                 # GNU Standard C++ Library
     - zlib                         # Compression library (if needed)
-
-  host:
-    - python
-    - pip
-    - setuptools
 
   run:
     - python
