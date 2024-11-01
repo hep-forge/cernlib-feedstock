@@ -1,13 +1,16 @@
 {% set name = environ.get('ANACONDA_PACKAGE')|string %}
-{% set version = environ.get('ANACONDA_VERSION')|string|replace('-', '.')  %}
+{% set version = environ.get('ANACONDA_VERSION', "2024.09.16")|string|replace('-', '.') %}
+{% set sha256 = {
+    "2024.09.16": "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201"
+} %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: "https://cernlib.web.cern.ch/download/2024_source/tar/cernlib-cernlib-2024.09.16.0-free.tar.gz"
-  # url: "https://cernlib.web.cern.ch/download/2024_source/tar/cernlib-cernlib-2024.09.16.0.tar.gz"
+  url: "https://cernlib.web.cern.ch/download/2024_source/tar/cernlib-cernlib-{{ version }}-free.tar.gz"
+  sha256: {{ sha256.get(version, "?") }}
 
 requirements:
   build:
