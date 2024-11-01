@@ -11,9 +11,9 @@ source:
 
 requirements:
   build:
-    - {{ compiler('gfortran') }} < 8 # GNU Fortran compiler
-    - {{ compiler('c') }} < 8        # GNU C compiler
-    - {{ compiler('cxx') }} < 8      # GNU C++ compiler
+    - {{ compiler('gfortran') }}<8 # GNU Fortran compiler
+    - {{ compiler('c') }}<8        # GNU C compiler
+    - {{ compiler('cxx') }}<8      # GNU C++ compiler
     
     - cmake                        # Build system
     - make                         # Make utility
