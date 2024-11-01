@@ -1,25 +1,22 @@
 #! /usr/bin/bash
 
-ls -ls $BUILD_PREFIX/bin/
-which gcc
-which cc
-which gfortran
+create_gnu_aliases() {
 
-ls -ls $BUILD_PREFIX/bin/*-cc
+    local GNU="$1"
+    local DIRNAME="$(dirname "$GNU")"
+    local PREFIX="${GNU%-*}"
 
-ln -s $BUILD_PREFIX/bin/*-cc $BUILD_PREFIX/bin/cc
-ln -s $BUILD_PREFIX/bin/*-gcc $BUILD_PREFIX/bin/gcc
-ln -s $BUILD_PREFIX/bin/*-gfortran $BUILD_PREFIX/bin/gfortran
-echo $CC
-echo $CXX
-echo $FC
+    for program in "$PREFIX-"*; do
 
-ls -ls $BUILD_PREFIX/bin/*-cc
-ls -ls $BUILD_PREFIX/bin/*-gcc
-ls -ls $BUILD_PREFIX/bin/*-gfortran
-which gcc
-which cc
-which gfortran
+            local short_name="${program#$PREFIX-}"
+
+            ln -sf "$program" "$DIRNAME/$short_name"
+            echo "$program => $DIRNAME/$short_name"
+        fi
+    done
+}
+
+create_gnu_aliases "$GCC"
 
 # export CERN=${PREFIX}
 
