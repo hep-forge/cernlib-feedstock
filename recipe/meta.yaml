@@ -4,12 +4,13 @@ package:
 
 {% set version = environ.get('COMMIT_TAG', None) or environ.get('COMMIT_LATEST_TAG', None) or None %}
 {% set sha256 = {
-    "2024.09.16": "0c093eff288dbb3c3ad2b04b0657e47e31a7db10c2bb56f879394b016884512a"
+    "2024.06.12.0-free": "4841604233c192646868c0ffef25e25cef4364dad186a674d64a6d48342eafce", 
+    "2024.09.16": "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201"
 } %}
 
 {% set version = version or sha256.keys()|first %}
 source:
-  url: "https://lhapdf.hepforge.org/downloads/?f=LHAPDF-{{ version }}.tar.gz"
+  url: "https://cernlib.web.cern.ch/download/{{ version.split('.')[0] }}_source/tar/?f=LHAPDF-{{ version }}.tar.gz"
   {% if sha256.get(version, None) %}
   sha256: {{ sha256.get(version) }}
   {% endif %}
