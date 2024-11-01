@@ -1,27 +1,19 @@
 #! /usr/bin/bash
 
-create_gnu_aliases() {
+create_aliases_based_on() {
 
-    local GNU="$1"
-    local DIRNAME="$(dirname "$GNU")"
-    local PREFIX="${GNU%-*}"
-
-    for program in "$PREFIX-"*; do
-
-            local short_name="${program#$PREFIX-}"
-
-            ln -sf "$program" "$DIRNAME/$short_name"
-            echo "$program => $DIRNAME/$short_name"
-        fi
+    local _prefix="${1%-*}"
+    for _program in "$_prefix-"*; do
+        ln -sf "$_program" "$(dirname $1)/${_program#$_prefix-}"
     done
 }
 
-create_gnu_aliases "$GCC"
+create_aliases_based_on "$GCC"
 
-# export CERN=${PREFIX}
+export CERN=${PREFIX}
 
-# sed -i -E 's/(make.*)\s*-j [0-9]+/\1/g' ./make_cernlib
-# ./make_cernlib
+sed -i -E 's/(make.*)\s*-j [0-9]+/\1/g' ./make_cernlib
+./make_cernlib
 
 # CMAKE installation is not working due to include path issue in kpuic
 # @TODO: Contact maintainer (https://gitlab.cern.ch/DPHEP/cernlib/cernlib/-/issues)
