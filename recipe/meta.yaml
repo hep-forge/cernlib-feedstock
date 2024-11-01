@@ -4,7 +4,7 @@ package:
 
 {% set version = environ.get('COMMIT_TAG', None) or environ.get('COMMIT_LATEST_TAG', None) or None %}
 {% set sha256 = {
-    "2024.09.16": "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201"
+    "2024.09.16": "0c093eff288dbb3c3ad2b04b0657e47e31a7db10c2bb56f879394b016884512a"
 } %}
 
 {% set version = version or sha256.keys()|first %}
