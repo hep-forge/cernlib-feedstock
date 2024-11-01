@@ -11,11 +11,11 @@ source:
 
 requirements:
   build:
-    - {{ compiler('gfortran') }}<8 # GNU Fortran compiler
-    - {{ compiler('c') }}<8        # GNU C compiler
-    - {{ compiler('cxx') }}<8      # GNU C++ compiler
+    - {{ compiler('gfortran') }}<12 # GNU Fortran compiler
+    - {{ compiler('c') }}<12        # GNU C compiler
+    - {{ compiler('cxx') }}<12      # GNU C++ compiler
     
-    - cmake                        # Build system
+    - cmake=3.18                   # Build system
     - make                         # Make utility
     - xorg-imake                   # X.Org imake utility
     - xorg-libx11                  # X11 client-side library
