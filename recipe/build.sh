@@ -9,7 +9,7 @@ export CERN=${PREFIX}
 #mkdir _build
 #cd _build
 
-#cmake .. -DCMAKE_INSTALL_PREFIX=${PREFIX}         
+#cmake .. -DCMAKE_INSTALL_PREFIX=${PREFIX}
 
 #make
 #make install
