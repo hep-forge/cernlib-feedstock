@@ -1,26 +1,26 @@
-{% set name = environ.get('ANACONDA_PACKAGE')|string %}
-{% set version = environ.get('ANACONDA_VERSION', "2024.09.16")|string|replace('-', '.') %}
+package:
+  name: {{ environ.get('ANACONDA_PACKAGE')|string|lower }}
+  version: {{ environ.get('ANACONDA_VERSION')|string|replace('-', '.') }}
+
+{% set version = environ.get('COMMIT_TAG', None) or environ.get('COMMIT_LATEST_TAG', None) or None %}
 {% set sha256 = {
     "2024.09.16": "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201"
 } %}
 
-package:
-  name: {{ name|lower }}
-  version: {{ version }}
-
+{% set version = version or sha256.keys()|first %}
 source:
-  url: "https://cernlib.web.cern.ch/download/2024_source/tar/cernlib-cernlib-{{ version }}-free.tar.gz"
+  url: "https://lhapdf.hepforge.org/downloads/?f=LHAPDF-{{ version }}.tar.gz"
   {% if sha256.get(version, None) %}
   sha256: {{ sha256.get(version) }}
   {% endif %}
 
 requirements:
   build:
-    - {{ compiler('gfortran') }}<11.3 # GNU Fortran compiler
-    - {{ compiler('c') }}<11.3        # GNU C compiler
-    - {{ compiler('cxx') }}<11.3      # GNU C++ compiler
+    - {{ compiler('gfortran') }}   # GNU Fortran compiler
+    - {{ compiler('c') }}          # GNU C compiler
+    - {{ compiler('cxx') }}        # GNU C++ compiler
     
-    - cmake=3.18                   # Build system
+    - cmake                        # Build system
     - make                         # Make utility
     - xorg-imake                   # X.Org imake utility
     - xorg-libx11                  # X11 client-side library
