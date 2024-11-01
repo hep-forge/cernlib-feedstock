@@ -1,9 +1,15 @@
 #! /usr/bin/bash
 
-mkdir build
-cd build
+export CERN=${PREFIX}
+./make_cernlib
 
-cmake --trace-expand .. -DCMAKE_INSTALL_PREFIX=${PWD}/../cern/new
+# CMAKE installation is not working due to include path issue in kpuic
+# @TODO: Contact maintainer (https://gitlab.cern.ch/DPHEP/cernlib/cernlib/-/issues)
 
-make
-make install
+#mkdir _build
+#cd _build
+
+#cmake .. -DCMAKE_INSTALL_PREFIX=${PREFIX}         
+
+#make
+#make install
