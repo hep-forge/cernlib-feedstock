@@ -1,9 +1,16 @@
 #! /usr/bin/bash
 
-export CERN=${PREFIX}
+ls -ls $BUILD_PREFIX/bin/
+which gcc
+which cc
+which gfortran
 
-sed -i -E 's/(make.*)\s*-j [0-9]+/\1/g' ./make_cernlib
-./make_cernlib
+ls -ls $BUILD_PREFIX/bin/x86_64-conda-linux-gnu-cc
+
+# export CERN=${PREFIX}
+
+# sed -i -E 's/(make.*)\s*-j [0-9]+/\1/g' ./make_cernlib
+# ./make_cernlib
 
 # CMAKE installation is not working due to include path issue in kpuic
 # @TODO: Contact maintainer (https://gitlab.cern.ch/DPHEP/cernlib/cernlib/-/issues)
