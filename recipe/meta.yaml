@@ -10,7 +10,9 @@ package:
 
 source:
   url: "https://cernlib.web.cern.ch/download/2024_source/tar/cernlib-cernlib-{{ version }}-free.tar.gz"
-  sha256: "{{ sha256.get(version, "") }}"
+  {% if sha256.get(version, None) %}
+  sha256: {{ sha256.get(version) }}
+  {% endif %}
 
 requirements:
   build:
