@@ -1,6 +1,8 @@
 #! /usr/bin/bash
 
 export CERN=${PREFIX}
+
+sed -i -E 's/(make.*)\s*-j [0-9]+/\1/g' ./make_cernlib
 ./make_cernlib
 
 # CMAKE installation is not working due to include path issue in kpuic
