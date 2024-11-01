@@ -36,6 +36,7 @@ requirements:
     - freetype                     # FreeType library for font rendering
     - openmotif-dev                # Open Motif development libraries
     - zlib                         # Compression library (if needed)
+    - libnsl
 
   run:
     - python
