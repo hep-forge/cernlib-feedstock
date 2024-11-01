@@ -72,7 +72,7 @@ jobs:
     
       - name: Build Package
         run: |
-          conda build . --prefix-length 80 --output-folder pkgs
+          conda build . --prefix-length 80 --output-folder pkgs --output-format .conda
 
       - name: Upload to Anaconda
         env:
