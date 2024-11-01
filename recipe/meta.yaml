@@ -53,3 +53,5 @@ extra:
   recipe-maintainers:
     - meiyasan
 
+outputs:
+  - type: conda2
