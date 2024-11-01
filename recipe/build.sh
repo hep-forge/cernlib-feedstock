@@ -5,13 +5,15 @@ which gcc
 which cc
 which gfortran
 
+ls -ls $BUILD_PREFIX/bin/*-cc
+
 ln -s $BUILD_PREFIX/bin/*-cc cc
 ln -s $BUILD_PREFIX/bin/*-gcc gcc
 ln -s $BUILD_PREFIX/bin/*-gfortran gfortran
-
 echo $CC
 echo $CXX
 echo $FC
+
 ls -ls $BUILD_PREFIX/bin/*-cc
 ls -ls $BUILD_PREFIX/bin/*-gcc
 ls -ls $BUILD_PREFIX/bin/*-gfortran
