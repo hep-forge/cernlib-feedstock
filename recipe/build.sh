@@ -5,11 +5,20 @@ which gcc
 which cc
 which gfortran
 
-ls -ls $BUILD_PREFIX/bin/x86_64-conda-linux-gnu-cc
+ln -s $BUILD_PREFIX/bin/*-cc cc
+ln -s $BUILD_PREFIX/bin/*-gcc gcc
+ln -s $BUILD_PREFIX/bin/*-gfortran gfortran
+
 echo $CC
 echo $CXX
 echo $FC
-ls -ls $BUILD_PREFIX/bin/x86_64-*-cc
+ls -ls $BUILD_PREFIX/bin/*-cc
+ls -ls $BUILD_PREFIX/bin/*-gcc
+ls -ls $BUILD_PREFIX/bin/*-gfortran
+which gcc
+which cc
+which gfortran
+
 # export CERN=${PREFIX}
 
 # sed -i -E 's/(make.*)\s*-j [0-9]+/\1/g' ./make_cernlib
