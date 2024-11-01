@@ -7,9 +7,9 @@ which gfortran
 
 ls -ls $BUILD_PREFIX/bin/*-cc
 
-ln -s $BUILD_PREFIX/bin/*-cc cc
-ln -s $BUILD_PREFIX/bin/*-gcc gcc
-ln -s $BUILD_PREFIX/bin/*-gfortran gfortran
+ln -s $BUILD_PREFIX/bin/*-cc $BUILD_PREFIX/bin/cc
+ln -s $BUILD_PREFIX/bin/*-gcc $BUILD_PREFIX/bin/gcc
+ln -s $BUILD_PREFIX/bin/*-gfortran $BUILD_PREFIX/bin/gfortran
 echo $CC
 echo $CXX
 echo $FC
