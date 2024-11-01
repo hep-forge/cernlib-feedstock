@@ -56,12 +56,11 @@ jobs:
         with:
           auto-update-conda: true
 
-# conda config --add channels defaults
-# conda config --add channels conda-forge
-# conda config --add channels hep-forge
-
       - name: Install Forge & Tools
         run: |
+          conda config --add channels defaults
+          conda config --add channels conda-forge
+          conda config --add channels hep-forge
           conda clean --index-cache -y
           conda install -y conda-smithy conda-verify anaconda-client
 
