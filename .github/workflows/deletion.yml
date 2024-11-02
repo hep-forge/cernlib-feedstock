@@ -1,0 +1,28 @@
+name: Detect Branch and Tag Deletion
+
+on:
+  delete:
+    branches:
+      - '**'
+    tags:
+      - '**'
+
+jobs:
+  detect_deletion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if a branch or tag was deleted
+        env:
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+
+          env
+          
+          if [ "$REF_TYPE" = "branch" ]; then
+            echo "Branch deleted: $REF_NAME"
+          elif [ "$REF_TYPE" = "tag" ]; then
+            echo "Tag deleted: $REF_NAME"
+          else
+            echo "Unexpected ref type: $REF_TYPE"
+          fi
