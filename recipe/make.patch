@@ -1,0 +1,20 @@
+diff --git a/make_cernlib b/make_cernlib
+index 7af7f2ca..bf527e8f 100755
+--- a/make_cernlib
++++ b/make_cernlib
+@@ -96,11 +96,11 @@ cd ..
+ 
+ #
+ # build kuipc
+-make -j 8 bin/kuipc  || exit $?
++make bin/kuipc  || exit $?
+ 
+ #
+ # build cernlib
+-make -j 16  || exit $?
++make 16  || exit $?
+ 
+ #
+ # build old patchy
+-- 
+

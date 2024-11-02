@@ -1,0 +1,26 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 97604f9f..7f944d0f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -364,7 +364,9 @@ message(STATUS "CERNLIB: CPP=${CPP}")
+ include(CheckFortranCompilerFlag)
+ include(CheckCCompilerFlag)
+ set ( NEW_CMAKE_C_FLAGS " ")
+-string(REPLACE " " ";" LIST_CMAKE_C_FLAGS "${C_C_FLAGS_TO_CHECK} ${CMAKE_C_FLAGS}")
++string(REPLACE "-isystem " "-I" _LIST_CMAKE_C_FLAGS  "${C_C_FLAGS_TO_CHECK} ${CMAKE_C_FLAGS}")
++string(REPLACE " " ";" LIST_CMAKE_C_FLAGS  "${_LIST_CMAKE_C_FLAGS}")
++
+ foreach(fx IN LISTS LIST_CMAKE_C_FLAGS)
+   if (fx)
+     check_c_compiler_flag(${fx} C_COMPILER_SUPPORTS_${fx})
+@@ -393,7 +395,9 @@ endif()
+ message(STATUS "CERNLIB: CMAKE_C_FLAGS=${CMAKE_C_FLAGS}")
+ ########################################################################
+ set ( NEW_CMAKE_Fortran_FLAGS " ")
+-string(REPLACE " " ";" LIST_CMAKE_Fortran_FLAGS  "${F_Fortran_FLAGS_TO_CHECK} ${CMAKE_Fortran_FLAGS}")
++string(REPLACE "-isystem " "-I" _LIST_CMAKE_Fortran_FLAGS  "${F_Fortran_FLAGS_TO_CHECK} ${CMAKE_Fortran_FLAGS}")
++string(REPLACE " " ";" LIST_CMAKE_Fortran_FLAGS  "${_LIST_CMAKE_Fortran_FLAGS}")
++
+ foreach(fl IN LISTS LIST_CMAKE_Fortran_FLAGS)
+   if (fl)
+     check_Fortran_compiler_flag(${fl} Fortran_COMPILER_SUPPORTS_${fl})

@@ -13,8 +13,9 @@ package:
 {% set version = version or sha256.keys()|first %}
 source:
   url: "https://cernlib.web.cern.ch/download/{{ version.split('.')[0] }}_source/tar/cernlib-cernlib-{{ version }}.tar.gz"
-#  patches:
-#    - isystem_patch.diff
+  patches:
+    - isystem.patch
+    - make.patch
 
   {% if sha256.get(version, None) %}
   sha256: {{ sha256.get(version) }}
