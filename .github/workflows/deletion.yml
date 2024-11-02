@@ -21,3 +21,9 @@ jobs:
           echo $REF_TYPE
           echo $REF_NAME
           echo $REF_TAG
+
+      - name: Print GitHub Context as JSON
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
