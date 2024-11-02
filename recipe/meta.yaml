@@ -32,13 +32,14 @@ requirements:
     - libxcrypt
 
   host:
+    - python
     - xorg-libx11                  # X11 client-side library
     - xorg-libxaw                  # Xaw widget set for X11
     - freetype                     # FreeType library for font rendering
     - openmotif-dev                # Open Motif development libraries
     - zlib                         # Compression library (if needed)
     - libnsl
-    - libxcrypt
+
   run:
     - xorg-libx11                  # X11 client-side library
     - xorg-libxaw                  # Xaw widget set for X11
