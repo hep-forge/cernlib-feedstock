@@ -26,3 +26,12 @@ jobs:
           else
             echo "Unexpected ref type: $REF_TYPE"
           fi
+
+  print_github_context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print GitHub Context as JSON
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
