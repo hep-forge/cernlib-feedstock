@@ -20,6 +20,9 @@ jobs:
 
       - name: Fetch Git Repository Information
         run: |
+
+          git show-ref 2> /dev/null
+          
           COMMIT_SHA=$(git rev-parse HEAD || exit 1)
           COMMIT_LATEST_TAG=$(git describe --tags --abbrev=0 2> /dev/null || echo "")
           COMMIT_TAG=$(git show-ref 2> /dev/null | grep $COMMIT_SHA | grep refs/tags/ | sed "s,refs/tags/,,g" | awk '{print $2}' | head -n1 || echo "")
