@@ -58,24 +58,17 @@ jobs:
 
       - name: Install Forge & Tools
         run: |
+          conda install -c conda-forge -y conda-smithy conda-verify conda-package-handling anaconda-client
+          
           conda config --add channels defaults
           conda config --add channels conda-forge
           conda config --add channels hep-forge
-
-          conda clean --index-cache -y
-          conda install -y conda-smithy conda-verify anaconda-client
-
-      - name: Rerender Feedstock
-        run: conda smithy rerender
-
-      - name: Check Environment
-        run: |
-          env
-    
+      
       - name: Build Package
         run: |
           conda build . --prefix-length 80 --output-folder pkgs
-
+          cph convert pkgs/*/*.tar.bz2 --out-folder pkgs
+          
       - name: Upload to Anaconda
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}

@@ -13,13 +13,12 @@ package:
 {% set version = version or sha256.keys()|first %}
 source:
   url: "https://cernlib.web.cern.ch/download/{{ version.split('.')[0] }}_source/tar/cernlib-cernlib-{{ version }}.tar.gz"
-  patches:
-    - isystem.patch
-    - make.patch
-
   {% if sha256.get(version, None) %}
   sha256: {{ sha256.get(version) }}
   {% endif %}
+  patches:
+    - isystem.patch
+    - make.patch
 
 requirements:
   build:
@@ -32,11 +31,13 @@ requirements:
     - xorg-imake                   # X.Org imake utility
 
   host:
+    - python
     - xorg-libx11                  # X11 client-side library
     - xorg-libxaw                  # Xaw widget set for X11
     - freetype                     # FreeType library for font rendering
     - openmotif-dev                # Open Motif development libraries
     - zlib                         # Compression library (if needed)
+    - libnsl
 
   run:
     - python
@@ -51,4 +52,3 @@ about:
 extra:
   recipe-maintainers:
     - meiyasan
-
