@@ -3,7 +3,5 @@ conda_build:
   pkg_format: '2'
 
 github:
-    user_or_org: hep-forge
-    repo_name: "cernlib-feedstock"
     branch_name: main
     tooling_branch_name: main

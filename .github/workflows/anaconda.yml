@@ -31,7 +31,7 @@ jobs:
       
       - name: Set Package Name, Version and Architecture
         run: |
-          VERSION="${COMMIT_TAG:-${COMMIT_LATEST_TAG:-0.0.0}-dev}"
+          VERSION="${COMMIT_TAG:-${COMMIT_LATEST_TAG}}"
           VERSION=${VERSION//-/.}
           echo "ANACONDA_VERSION=$VERSION"
           echo "ANACONDA_VERSION=$VERSION" >> $GITHUB_ENV
@@ -48,6 +48,10 @@ jobs:
           echo "ANACONDA_ARCH=$ANACONDA_ARCH"
           echo "ANACONDA_ARCH=$ANACONDA_ARCH" >> $GITHUB_ENV
 
+          ANACONDA_LABEL=${COMMIT_BRANCH:-main}
+          echo "ANACONDA_LABEL=$ANACONDA_LABEL"
+          echo "ANACONDA_LABEL=$ANACONDA_LABEL" >> $GITHUB_ENV
+
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
         with:
@@ -55,21 +59,18 @@ jobs:
 
       - name: Install Forge & Tools
         run: |
-          conda install -c conda-forge -y conda-smithy conda-verify conda-package-handling anaconda-client
-          conda config --add channels defaults
-          conda config --add channels conda-forge
-          conda config --add channels hep-forge
+          /usr/share/miniconda/bin/conda install -c conda-forge -y conda-smithy conda-verify conda-package-handling anaconda-client
+          /usr/share/miniconda/bin/conda config --add channels defaults
+          /usr/share/miniconda/bin/conda config --add channels conda-forge
+          /usr/share/miniconda/bin/conda config --add channels hep-forge
 
-          export PATH=/usr/share/miniconda/bin/:$PATH
-          
       - name: Build Package
         run: |
-          conda build . --output-folder pkgs
-          cph convert pkgs/*/*.tar.bz2 --out-folder pkgs
-          
+          /usr/share/miniconda/bin/conda build . --output-folder pkgs
+          /usr/share/miniconda/bin/cph transmute pkgs/*/*.tar.bz2 .conda
+ 
       - name: Upload to Anaconda
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
-          [ ! -z "$COMMIT_BRANCH" ] && ANACONDA_LABEL=$COMMIT_BRANCH || ANACONDA_LABEL="main"
-          [ ! -z "$COMMIT_TAG" ] && anaconda -t $ANACONDA_TOKEN upload --force pkgs/*/*.conda --label $ANACONDA_LABEL || exit 0
+          /usr/share/miniconda/bin/anaconda -t $ANACONDA_TOKEN upload --force pkgs/*/*.conda --label $ANACONDA_LABEL || exit 0
