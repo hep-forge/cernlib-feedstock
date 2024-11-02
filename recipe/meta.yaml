@@ -29,6 +29,7 @@ requirements:
     - cmake                        # Build system
     - make                         # Make utility
     - xorg-imake                   # X.Org imake utility
+    - libxcrypt
 
   host:
     - python
@@ -37,7 +38,6 @@ requirements:
     - freetype                     # FreeType library for font rendering
     - openmotif-dev                # Open Motif development libraries
     - zlib                         # Compression library (if needed)
-    - libxcrypt
     - libnsl
 
   run:
