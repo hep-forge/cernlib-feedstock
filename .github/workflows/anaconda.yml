@@ -73,4 +73,4 @@ jobs:
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
-          /usr/share/miniconda/bin/anaconda -t $ANACONDA_TOKEN upload --force pkgs/*/*.conda --label $ANACONDA_LABEL || exit 0
+          [ ! -z "$COMMIT_TAG" ] && /usr/share/miniconda/bin/anaconda -t $ANACONDA_TOKEN upload --force pkgs/*/*.conda --label $ANACONDA_LABEL || exit 0
