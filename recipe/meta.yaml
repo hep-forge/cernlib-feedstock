@@ -1,20 +1,23 @@
-package:
-  name: {{ environ.get('ANACONDA_PACKAGE')|string|lower }}
-  version: {{ environ.get('ANACONDA_VERSION')|string|replace('-', '.') }}
-
-{% set version = environ.get('COMMIT_TAG', None) or environ.get('COMMIT_LATEST_TAG', None) or None %}
-{% set sha256 = {
+{% set name = environ.get('ANACONDA_PACKAGE')|string|lower %}
+{% set versions = {
     "2024.09.16.0-free": "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201",
     "2024.09.16": "db111e67d895507e245cdb285086cd5f5529b4f5a1b5794a7ef5753bbb582201",
     "2024.06.12.0-free": "4841604233c192646868c0ffef25e25cef4364dad186a674d64a6d48342eafce", 
     "2024.06.12": "c2a09876785dc010a7fdb482f48f94f76483626f2fdbeb49ecde9bd49e820f01"
 } %}
 
-{% set version = version or sha256.keys()|first %}
+{% set version = environ.get('ANACONDA_VERSION', None) %}
+{% set version = version or versions.keys()|first %}
+{% set version = version|string|replace('-', '.') %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
 source:
   url: "https://cernlib.web.cern.ch/download/{{ version.split('.')[0] }}_source/tar/cernlib-cernlib-{{ version }}.tar.gz"
-  {% if sha256.get(version, None) %}
-  sha256: {{ sha256.get(version) }}
+  {% if versions.get(version, None) %}
+  sha256: {{ versions.get(version) }}
   {% endif %}
   patches:
     - patches/isystem.patch
