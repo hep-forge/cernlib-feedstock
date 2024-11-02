@@ -17,8 +17,8 @@ source:
   sha256: {{ sha256.get(version) }}
   {% endif %}
   patches:
-    - isystem.patch
-    - make.patch
+    - patches/isystem.patch
+    - patches/make.patch
 
 requirements:
   build:
@@ -37,6 +37,7 @@ requirements:
     - freetype                     # FreeType library for font rendering
     - openmotif-dev                # Open Motif development libraries
     - zlib                         # Compression library (if needed)
+    - libxcrypt
     - libnsl
 
   run:
