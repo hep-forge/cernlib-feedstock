@@ -27,6 +27,7 @@ jobs:
 
           [[ $COMMIT_BRANCH == *"dev"* ]] && COMMIT_TYPE="-dev"
           [[ $COMMIT_BRANCH == *"patches"* ]] && COMMIT_TYPE="-patches"
+          [[ $COMMIT_BRANCH == *"test"* ]] && COMMIT_TYPE="-test"
 
           [ ! -z "$COMMIT_SHA" ] && echo "COMMIT_SHA=$COMMIT_SHA" >> $GITHUB_ENV
           [ ! -z "$COMMIT_TAG" ] && echo "COMMIT_TAG=$COMMIT_TAG" >> $GITHUB_ENV
