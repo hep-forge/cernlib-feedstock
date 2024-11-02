@@ -53,6 +53,9 @@ jobs:
           echo "ANACONDA_LABEL=$ANACONDA_LABEL"
           echo "ANACONDA_LABEL=$ANACONDA_LABEL" >> $GITHUB_ENV
 
+      - name: Get Environment
+        run: |
+          env
       - name: Check if a branch or tag was deleted
         env:
           REF_TYPE: ${{ github.ref_type }}
