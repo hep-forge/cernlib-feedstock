@@ -48,9 +48,6 @@ jobs:
           echo "ANACONDA_ARCH=$ANACONDA_ARCH"
           echo "ANACONDA_ARCH=$ANACONDA_ARCH" >> $GITHUB_ENV
 
-          echo "CONDA_BLD_PATH=/tmp/conda-bld" >> $GITHUB_ENV
-          
-
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
         with:
@@ -59,15 +56,15 @@ jobs:
       - name: Install Forge & Tools
         run: |
           conda install -c conda-forge -y conda-smithy conda-verify conda-package-handling anaconda-client
-          
           conda config --add channels defaults
           conda config --add channels conda-forge
           conda config --add channels hep-forge
-          which cph
-          exit 1
+
+          export PATH=/usr/share/miniconda/bin/:$PATH
+          
       - name: Build Package
         run: |
-          conda build . --prefix-length 80 --output-folder pkgs
+          conda build . --output-folder pkgs
           cph convert pkgs/*/*.tar.bz2 --out-folder pkgs
           
       - name: Upload to Anaconda
@@ -75,4 +72,4 @@ jobs:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           [ ! -z "$COMMIT_BRANCH" ] && ANACONDA_LABEL=$COMMIT_BRANCH || ANACONDA_LABEL="main"
-          [ ! -z "$COMMIT_TAG" ] && /usr/share/miniconda/bin/anaconda -t $ANACONDA_TOKEN upload --force pkgs/*/*.conda --label $ANACONDA_LABEL || exit 0
+          [ ! -z "$COMMIT_TAG" ] && anaconda -t $ANACONDA_TOKEN upload --force pkgs/*/*.conda --label $ANACONDA_LABEL || exit 0
