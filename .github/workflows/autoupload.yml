@@ -1,9 +1,9 @@
-name: Conda Build
+name: Conda Build & Upload
 
 on:
   push:
     branches:
-      - '**'
+      - '*test*'
     tags:
       - '*'
 
@@ -23,15 +23,19 @@ jobs:
           COMMIT_LATEST_TAG=$(git describe --tags --abbrev=0 2> /dev/null || echo "")
           COMMIT_TAG=$(git show-ref 2> /dev/null | grep $COMMIT_SHA | grep refs/tags/ | sed "s,refs/tags/,,g" | awk '{print $2}' | head -n1 || echo "")
           COMMIT_BRANCH=$(git show-ref 2> /dev/null | grep $COMMIT_SHA | grep refs/remotes/origin/ | sed "s,refs/remotes/origin/,,g" | awk '{print $2}' | head -n1 || echo "")
-          
+
+          [[ $COMMIT_BRANCH == *"dev"* ]] && COMMIT_TYPE="-dev"
+          [[ $COMMIT_BRANCH == *"patches"* ]] && COMMIT_TYPE="-patches"
+
           [ ! -z "$COMMIT_SHA" ] && echo "COMMIT_SHA=$COMMIT_SHA" >> $GITHUB_ENV
           [ ! -z "$COMMIT_TAG" ] && echo "COMMIT_TAG=$COMMIT_TAG" >> $GITHUB_ENV
+          [ ! -z "$COMMIT_TYPE" ] && echo "COMMIT_TYPE=$COMMIT_TYPE" >> $GITHUB_ENV
           [ ! -z "$COMMIT_LATEST_TAG" ] && echo "COMMIT_LATEST_TAG=$COMMIT_LATEST_TAG" >> $GITHUB_ENV
           [ ! -z "$COMMIT_BRANCH" ] && echo "COMMIT_BRANCH=$COMMIT_BRANCH" >> $GITHUB_ENV
-      
+          
       - name: Set Package Name, Version and Architecture
         run: |
-          VERSION="${COMMIT_TAG:-${COMMIT_LATEST_TAG}}"
+          VERSION="${COMMIT_TAG:-${COMMIT_LATEST_TAG}}${COMMIT_TYPE}"
           VERSION=${VERSION//-/.}
           echo "ANACONDA_VERSION=$VERSION"
           echo "ANACONDA_VERSION=$VERSION" >> $GITHUB_ENV
