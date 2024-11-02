@@ -14,6 +14,10 @@ package:
   name: {{ name }}
   version: {{ version|replace('-', '.') }}
 
+{% if environ.get('COMMIT_TYPE', None) %
+{% set version = version|replace(environ.get('COMMIT_TYPE')+"$", "") %}
+{% endif %}
+
 source:
   url: "https://cernlib.web.cern.ch/download/{{ version.split('.')[0] }}_source/tar/cernlib-cernlib-{{ version }}.tar.gz"
   {% if versions.get(version, None) %}
