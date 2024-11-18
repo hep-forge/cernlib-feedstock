@@ -1,26 +1,66 @@
+From 1785b52e24c169e74317812891bd12aa7859f6f2 Mon Sep 17 00:00:00 2001
+From: Marco Meyer-Conde <marco@tcu.ac.jp>
+Date: Mon, 18 Nov 2024 21:37:07 +0900
+Subject: [PATCH] isystem
+
+---
+ CMakeLists.txt | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 97604f9f..7f944d0f 100644
+index 4ed9e05a..46c01410 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -364,7 +364,9 @@ message(STATUS "CERNLIB: CPP=${CPP}")
+@@ -364,7 +364,15 @@ message(STATUS "CERNLIB: CPP=${CPP}")
  include(CheckFortranCompilerFlag)
  include(CheckCCompilerFlag)
  set ( NEW_CMAKE_C_FLAGS " ")
 -string(REPLACE " " ";" LIST_CMAKE_C_FLAGS "${C_C_FLAGS_TO_CHECK} ${CMAKE_C_FLAGS}")
-+string(REPLACE "-isystem " "-I" _LIST_CMAKE_C_FLAGS  "${C_C_FLAGS_TO_CHECK} ${CMAKE_C_FLAGS}")
-+string(REPLACE " " ";" LIST_CMAKE_C_FLAGS  "${_LIST_CMAKE_C_FLAGS}")
++
++set(_LIST_CMAKE_C_FLAGS "${C_C_FLAGS_TO_CHECK} ${CMAKE_C_FLAGS}")
++string(REPLACE "-isystem " "-I" LIST_CMAKE_C_FLAGS "${_LIST_CMAKE_C_FLAGS}")
++set(_LIST_CMAKE_C_FLAGS "${LIST_CMAKE_C_FLAGS}")
++string(REPLACE "-I " "-I" LIST_CMAKE_C_FLAGS "${_LIST_CMAKE_C_FLAGS}")
++set(_LIST_CMAKE_C_FLAGS "${LIST_CMAKE_C_FLAGS}")
++string(REPLACE " " ";" LIST_CMAKE_C_FLAGS "${_LIST_CMAKE_C_FLAGS}")
++set(_LIST_CMAKE_C_FLAGS "${LIST_CMAKE_C_FLAGS}")
 +
  foreach(fx IN LISTS LIST_CMAKE_C_FLAGS)
    if (fx)
      check_c_compiler_flag(${fx} C_COMPILER_SUPPORTS_${fx})
-@@ -393,7 +395,9 @@ endif()
+@@ -390,10 +398,21 @@ if (CERNLIB_FORCE_32)
+     set(CMAKE_C_FLAGS " -m32 ${CMAKE_C_FLAGS}")
+   endif()
+ endif()
++
++set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "Flags for the C compiler")
  message(STATUS "CERNLIB: CMAKE_C_FLAGS=${CMAKE_C_FLAGS}")
++
  ########################################################################
  set ( NEW_CMAKE_Fortran_FLAGS " ")
 -string(REPLACE " " ";" LIST_CMAKE_Fortran_FLAGS  "${F_Fortran_FLAGS_TO_CHECK} ${CMAKE_Fortran_FLAGS}")
-+string(REPLACE "-isystem " "-I" _LIST_CMAKE_Fortran_FLAGS  "${F_Fortran_FLAGS_TO_CHECK} ${CMAKE_Fortran_FLAGS}")
-+string(REPLACE " " ";" LIST_CMAKE_Fortran_FLAGS  "${_LIST_CMAKE_Fortran_FLAGS}")
++
++set(_LIST_CMAKE_Fortran_FLAGS "${F_Fortran_FLAGS_TO_CHECK} ${CMAKE_Fortran_FLAGS}")
++string(REPLACE "-isystem " "-I" LIST_CMAKE_Fortran_FLAGS "${_LIST_CMAKE_Fortran_FLAGS}")
++set(_LIST_CMAKE_Fortran_FLAGS "${LIST_CMAKE_Fortran_FLAGS}")
++string(REPLACE "-I " "-I" LIST_CMAKE_Fortran_FLAGS "${_LIST_CMAKE_Fortran_FLAGS}")
++set(_LIST_CMAKE_Fortran_FLAGS "${LIST_CMAKE_Fortran_FLAGS}")
++string(REPLACE " " ";" LIST_CMAKE_Fortran_FLAGS "${_LIST_CMAKE_Fortran_FLAGS}")
++set(_LIST_CMAKE_Fortran_FLAGS "${LIST_CMAKE_Fortran_FLAGS}")
 +
  foreach(fl IN LISTS LIST_CMAKE_Fortran_FLAGS)
    if (fl)
      check_Fortran_compiler_flag(${fl} Fortran_COMPILER_SUPPORTS_${fl})
+@@ -420,7 +439,9 @@ if (CERNLIB_FORCE_32)
+     set(CMAKE_Fortran_FLAGS " -m32 ${CMAKE_Fortran_FLAGS}")
+   endif()
+ endif()
++set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS}" CACHE STRING "Flags for the Fortran compiler")
+ message(STATUS "CERNLIB : CMAKE_Fortran_FLAGS=${CMAKE_Fortran_FLAGS}")
++
+ ########################################################################
+ set(man1  cernlib.1  cernlib-static.1  dzedit.1  dzeX11.1  gxint.1  kuesvr.1  kuipc.1  kxterm.1  nycheck.1  nydiff.1  nyindex.1  nylist.1
+           nymerge.1  nypatchy.1  nyshell.1  nysynopt.1  nytidy.1  paw++.1  paw.1  pawX11.1  yexpand.1  ypatchy.1  zftp.1)
+-- 
+2.47.0
+
