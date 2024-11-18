@@ -37,7 +37,7 @@ requirements:
     - xorg-libx11
     - xorg-libxaw
     - freetype
-    - openmotif-dev
+    - openmotif
     - zlib
     - libnsl
     - openssl
