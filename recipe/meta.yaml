@@ -37,10 +37,10 @@ requirements:
     - xorg-libx11
     - xorg-libxaw
     - freetype
-    - openmotif-dev
     - zlib
     - libnsl
     - openssl
+    - hep-forge::openmotif
 
   run:
     - xorg-libx11
@@ -48,6 +48,11 @@ requirements:
     - freetype
     - libnsl
 
+test:
+  files:
+    - hbook.f
+  commands:
+    - gfortran -O1 -fno-automatic -std=legacy -ffixed-line-length-132 -no-pie -o hbook hbook.f -lpacklib -lmathlib -lkernlib
 
 about:
   home: "https://cernlib.web.cern.ch"
