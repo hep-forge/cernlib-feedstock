@@ -41,7 +41,7 @@ requirements:
     - zlib
     - libnsl
     - openssl
-    - hep-forge::openmotif
+    - openmotif-dev
 
   run:
     - xorg-libx11
@@ -53,7 +53,9 @@ test:
   files:
     - hbook.f
   commands:
-    - gfortran -O1 -fno-automatic -std=legacy -ffixed-line-length-132 -no-pie -o hbook hbook.f -L${PREFIX}/lib -lpacklib -lmathlib -lkernlib
+    - gfortran -o hbook hbook.f -L$CONDA_PREFIX/lib $(cernlib mathlib)
+    - hbook
+    - ls -l example.hbook
 
 about:
   home: "https://cernlib.web.cern.ch"
