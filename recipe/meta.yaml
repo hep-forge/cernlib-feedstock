@@ -37,6 +37,7 @@ requirements:
   host:
     - xorg-libx11
     - xorg-libxaw
+    - xorg-xorgproto
     - freetype
     - zlib
     - libnsl
