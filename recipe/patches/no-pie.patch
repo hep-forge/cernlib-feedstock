@@ -1,0 +1,44 @@
+From 138b7e4d4b1b43e26011b1fcb99c17546f80c7cd Mon Sep 17 00:00:00 2001
+From: Marco Meyer-Conde <marco@tcu.ac.jp>
+Date: Thu, 19 Dec 2024 17:41:04 +0900
+Subject: [PATCH] no-pie
+
+---
+ contrib/cernlib.in | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/contrib/cernlib.in b/contrib/cernlib.in
+index f8fcc7d7..aac4bfa7 100644
+--- a/contrib/cernlib.in
++++ b/contrib/cernlib.in
+@@ -25,6 +25,7 @@ print_help() {
+ 	 -lgrafX11 -lpacklib -lkernlib -Wl,-dy -L/usr/X11R6/lib -lXbae -lXm -lXaw
+ 	 -llapack -lm -lXt -lX11 -lnsl -lcrypt -ldl -lgfortran".
+ 
++	  -pie          Remove the -no-pie flag
+ 	  -a <arch>	Specify an architecture, e.g. Linux (default), AIX, HP-UX, etc.
+ 	  -dy, -safe	Don't assume CERN libraries should be linked against statically.
+ 	  		This flag is also required when using the compiler -static flag.
+@@ -491,9 +492,11 @@ _argsdone=false
+ ARGS=""
+ COMPFLAGS=""
+ 
++_pie="-no-pie"
+ while [ $# -gt 0 ] ; do
+ 	if [ "$_argsdone" = false ] ; then
+ 		case $1 in
++ 			-pie)    _pie=""  ; shift	;;
+ 			-a)    _arch="$2" ; shift	;;
+ 			-dy|-safe) _dynamic=true	;;
+ 			-G)    _driver="$2" ; shift 	;;
+@@ -564,6 +567,7 @@ if [ "$CERN_ROOT" != "@PREFIX@" ] ; then
+ 	fi
+ fi
+ [ -z "$_u" ] && SYSDEPS=`find_sysdeps $_arch` || SYSDEPS=""
++SYSDEPS="$SYSDEPS $_pie"
+ 
+ echo $COMPFLAGS $LIBDIR `uniquify $CERNLIB $OTHERLIBS $SYSDEPS`
+ exit 0
+-- 
+2.47.0
+

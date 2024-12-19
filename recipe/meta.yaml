@@ -21,6 +21,7 @@ source:
   patches:
     - patches/isystem.patch
     - patches/make.patch
+    - patches/no-pie.patch
 
 requirements:
   build:
@@ -52,7 +53,7 @@ test:
   files:
     - hbook.f
   commands:
-    - gfortran -O1 -fno-automatic -std=legacy -ffixed-line-length-132 -no-pie -o hbook hbook.f -lpacklib -lmathlib -lkernlib
+    - gfortran -O1 -fno-automatic -std=legacy -ffixed-line-length-132 -no-pie -o hbook hbook.f -L${PREFIX}/lib -lpacklib -lmathlib -lkernlib
 
 about:
   home: "https://cernlib.web.cern.ch"
