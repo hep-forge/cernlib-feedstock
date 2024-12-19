@@ -54,6 +54,8 @@ test:
     - hbook.f
   commands:
     - gfortran -o hbook hbook.f -L$CONDA_PREFIX/lib $(cernlib mathlib)
+    - ./hbook
+    - ls -l example.hbook
 
 about:
   home: "https://cernlib.web.cern.ch"
