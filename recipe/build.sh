@@ -12,5 +12,6 @@ cmake .. -DCMAKE_INSTALL_PREFIX=${PREFIX} \
 # @TODO: openmotif compatibility issue
 # -DCERNLIB_BUILD_SHARED=OFF \
 
-make -j$(nproc)
+NPROC=$(nproc 2>/dev/null || sysctl -n hw.ncpu)
+make -j$NPROC
 make install
