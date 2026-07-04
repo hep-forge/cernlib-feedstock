@@ -32,7 +32,6 @@ requirements:
     - cmake                        # Build system
     - make                         # Make utility
     - xorg-imake                   # X.Org imake utility
-    - libxcrypt
 
   host:
     - xorg-libx11
@@ -43,6 +42,11 @@ requirements:
     - libnsl
     - openssl
     - openmotif-dev
+    # -lcrypt: libxcrypt provides libcrypt.so at link time. Was in
+    # build: (native tool env) instead of host: (target link path),
+    # which happened to work on amd64 but not aarch64 -- "ld: cannot
+    # find -lcrypt".
+    - libxcrypt
 
   run:
     - xorg-libx11
