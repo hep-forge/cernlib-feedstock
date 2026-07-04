@@ -6,12 +6,15 @@ export CMAKE_POLICY_VERSION_MINIMUM=3.5
 
 # Several targets' own link steps (kuesvr/cdmove, pawlib/comis/test/comist)
 # drop -L$PREFIX/lib, so -lcrypt can't find libxcrypt's libcrypt.so even
-# though it's a host: dependency and correctly installed. Plain `export
-# LDFLAGS` isn't enough -- CMake only seeds CMAKE_EXE_LINKER_FLAGS_INIT
-# from env LDFLAGS on a truly fresh configure, and some per-target link
-# rules here don't inherit it anyway. Pass it straight into CMake's own
-# linker-flags cache variable so every target gets it regardless.
+# though it's a host: dependency and correctly installed. Neither plain
+# `export LDFLAGS` nor -DCMAKE_EXE_LINKER_FLAGS on the configure line
+# reach comist's link step (its CMakeLists.txt likely sets its own
+# LINK_FLAGS/link_libraries that don't inherit the global ones). The one
+# thing every linker invocation genuinely can't ignore is LIBRARY_PATH --
+# gcc/gfortran/collect2 append it to their own -L search dirs regardless
+# of what the build system generated on the command line.
 export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib -Wl,-rpath,${PREFIX}/lib"
+export LIBRARY_PATH="${PREFIX}/lib${LIBRARY_PATH:+:$LIBRARY_PATH}"
 CRYPT_LDFLAGS="-L${PREFIX}/lib -Wl,-rpath,${PREFIX}/lib"
 
 mkdir -p build-scripts
