@@ -3,9 +3,18 @@ python:
   - 3.10
   - 3.11
   - 3.12
-  
+
 packages:
   - numpy
+
+# Without this, the solver picks conda-forge's newest available openssl
+# at build time (4.0.1 on linux-aarch64, brand new there) and bakes in
+# a >=4.0.1,<5.0a0 run requirement -- but no aarch64 Python build (or
+# xfitter/xfitter-dev, pinned <4.0a0) has caught up to openssl 4.x yet,
+# making the published package uninstallable alongside them. Pin to the
+# 3.x line the rest of the aarch64 stack actually uses.
+openssl:
+  - 3
 
 c_stdlib:
   - sysroot                  # [linux]
