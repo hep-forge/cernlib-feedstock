@@ -15,7 +15,7 @@ docker_image:
 freetype:
 - '2'
 openssl:
-- '3.5'
+- '3.0'
 target_platform:
 - linux-64
 zip_keys:

@@ -4,14 +4,19 @@ python:
 packages:
   - numpy
 
-# Without this, the solver picks conda-forge's newest available openssl
-# at build time (4.0.1 on linux-aarch64, brand new there) and bakes in
-# a >=4.0.1,<5.0a0 run requirement -- but no aarch64 Python build (or
-# xfitter/xfitter-dev, pinned <4.0a0) has caught up to openssl 4.x yet,
-# making the published package uninstallable alongside them. Pin to the
-# 3.x line the rest of the aarch64 stack actually uses.
+# Pin the *build-time* openssl to the oldest still-published 3.x minor
+# (patch floats to the latest 3.0.z automatically). openssl's run_exports
+# bakes in ">=<build version>,<4.0a0" -- building against whatever's
+# newest (3.6.3, then briefly 4.0.1) made that floor the newest thing on
+# the channel, which is higher than what many prebuilt conda-forge
+# binaries (e.g. git, linked against 3.0.0) tolerate at runtime
+# ("OpenSSL version mismatch" -- their compile-time check trips on a
+# major.minor drift, not just patch). Pinning to 3.0 keeps the floor at
+# the oldest ABI-compatible line instead of dragging every consuming
+# environment up to the newest release; the <4.0a0 ceiling still lets
+# environments upgrade freely within 3.x.
 openssl:
-  - 3
+  - 3.0
 
 c_stdlib:
   - sysroot                  # [linux]
