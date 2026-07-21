@@ -24,7 +24,11 @@ cmake $RECIPE_DIR/scripts
 mkdir -p ../build
 cd ../build
 
-cmake .. -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+# ${CMAKE_ARGS} carries conda-build's own -DCMAKE_BUILD_TYPE=Release
+# (plus toolchain/strip paths) -- omitting it leaves CMAKE_BUILD_TYPE
+# unset (this project's own CMakeLists.txt never defaults it either),
+# producing an unoptimized, unstripped debug-info binary.
+cmake .. ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} \
 -DCERNLIB_POSITION_INDEPENDENT_CODE=ON \
 -DCMAKE_EXE_LINKER_FLAGS="${CRYPT_LDFLAGS}" \
 -DCMAKE_SHARED_LINKER_FLAGS="${CRYPT_LDFLAGS}"
