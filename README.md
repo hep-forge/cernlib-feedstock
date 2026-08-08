@@ -13,7 +13,12 @@ CERN library for high-energy physics calculations.
 
 ## Architectures
 
-State per architecture: see the platforms badge above or [anaconda.org/hep-forge/cernlib](https://anaconda.org/hep-forge/cernlib).
+| Architecture | Latest published |
+|--------------|------------------|
+| linux-amd64 (`linux-64`) | ✅ `2024.09.16.0.free` |
+| linux-arm64 (`linux-aarch64`) | ✅ `2024.09.16.0.free` |
+
+_As of the last feedstock render; the badges above are live._
 
 
 ## Install
