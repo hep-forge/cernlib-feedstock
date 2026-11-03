@@ -23,6 +23,10 @@ source:
     - patches/make.patch
     - patches/no-pie.patch
 
+build:
+  # openmotif-dev and libnsl exist on conda-forge for Linux only.
+  skip: true  # [osx]
+
 requirements:
   build:
     - {{ compiler('fortran') }}   # GNU Fortran compiler
